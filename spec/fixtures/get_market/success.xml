@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<soap:Body>
+		<n:getMarketResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+			<n:Result xsi:type="n2:GetMarketResp">
+				<header xsi:type="n2:APIResponseHeader">
+					<errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+					<minorErrorCode xsi:nil="1"></minorErrorCode>
+					<sessionToken xsi:type="xsd:string">XEOkVJyFKZJ+VMFIdbYm1atWD19j/B502NQq5ekMGLc=</sessionToken>
+					<timestamp xsi:type="xsd:dateTime">2011-09-27T06:17:50.362Z</timestamp>
+				</header>
+				<errorCode xsi:type="n2:GetMarketErrorEnum">OK</errorCode>
+				<market xsi:type="n2:Market">
+					<countryISO3 xsi:type="xsd:string">AUS</countryISO3>
+					<discountAllowed xsi:type="xsd:boolean">true</discountAllowed>
+					<eventTypeId xsi:type="xsd:int">61420</eventTypeId>
+					<lastRefresh xsi:type="xsd:long">1317104157810</lastRefresh>
+					<marketBaseRate xsi:type="xsd:float">5.0</marketBaseRate>
+					<marketDescription xsi:type="xsd:string">&lt;br&gt;&lt;b&gt;MARKET INFORMATION&lt;/b&gt;&lt;br&gt;&lt;br&gt;For further information please see &lt;a href=http://content.betfair.com/aboutus/content.asp?sWhichKey=Rules%20and%20Regulations#undefined.do style=color:0163ad; text-decoration: underline; target=_blank&gt;Rules &amp; Regs&lt;/a&gt;.&lt;br&gt;&lt;br&gt;Who will win this AFL match? At the start of the match all unmatched bets will be cancelled and the market will be turned &lt;b&gt;IN PLAY&lt;/b&gt;. This market will not be actively managed therefore it is the responsibility of all users to manage their own positions. Dead Heat rules apply.
+&lt;br&gt;&lt;br&gt;This is a &lt;a href=&quot;http://cross-matching.betfair.com.au/&quot; target=&quot;_blank&quot;&gt;cross-matching&lt;/a&gt; market.&lt;br&gt;&lt;br&gt;Customers should be aware that:&lt;b&gt;&lt;br&gt;&lt;br&gt;&lt;li&gt;Transmissions described as “live” by some broadcasters may actually be delayed and that all in-play matches are not necessarily televised.&lt;/li&gt;&lt;br&gt;&lt;li&gt;The extent of any such delay may vary between customers, depending on the set-up through which they are receiving pictures or data.&lt;/li&gt;&lt;br&gt;&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;b&gt;BET IN-PLAY&lt;/b&gt;&lt;br&gt;&lt;br&gt;Australian customers call Telbet to bet in-play on this market – call &lt;b&gt;132BET (132238)&lt;/b&gt;&lt;br&gt;&lt;br&gt;&lt;table cellborder=&quot;0&quot; width=&quot;100%&quot;&gt;&lt;tr&gt;&lt;td&gt;&lt;a href=&quot;http://help.betfair.com/contents/itemId/i65767577/index.en.html&quot; target=&quot;_blank&quot;&gt;&lt;img src=&quot;http://content.betfair.com/images/en_GB/homepage/ausflag.jpg&quot; border=&quot;0&quot;&gt;&lt;/a&gt;&lt;/td&gt;&lt;td width=&quot;5&quot;&gt;&amp;nbsp;&lt;/td&gt;&lt;td class=&quot;marketInfo_GreyText&quot;&gt;&lt;a href=&quot;http://help.betfair.com/contents/itemId/i65767577/index.en.html&quot; target=&quot;_blank&quot;&gt;This market is regulated by the Tasmanian Gaming Commission under a Tasmanian Gaming Licence (TGL) issued to Betfair Pty Ltd.&lt;/a&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;br&gt;</marketDescription>
+					<marketDescriptionHasDate xsi:type="xsd:boolean">true</marketDescriptionHasDate>
+					<marketDisplayTime xsi:type="xsd:dateTime">0001-01-01T00:00:00.000Z</marketDisplayTime>
+					<marketId xsi:type="xsd:int">100386338</marketId>
+					<marketStatus xsi:type="n2:MarketStatusEnum">ACTIVE</marketStatus>
+					<marketSuspendTime xsi:type="xsd:dateTime">2011-10-01T04:30:00.000Z</marketSuspendTime>
+					<marketTime xsi:type="xsd:dateTime">2011-10-01T04:30:00.000Z</marketTime>
+					<marketType xsi:type="n2:MarketTypeEnum">O</marketType>
+					<marketTypeVariant xsi:type="n2:MarketTypeVariantEnum">D</marketTypeVariant>
+					<menuPath xsi:type="xsd:string">\AFL 2011\Grand Final - 01 October\Collingwood v Geelong</menuPath>
+					<eventHierarchy xsi:nil="1"></eventHierarchy>
+					<name xsi:type="xsd:string">Match Odds</name>
+					<numberOfWinners xsi:type="xsd:int">1</numberOfWinners>
+					<parentEventId xsi:type="xsd:int">26757142</parentEventId>
+					<runners xsi:type="n2:ArrayOfRunner">
+						<n2:Runner xsi:type="n2:Runner">
+							<asianLineId xsi:type="xsd:int">0</asianLineId>
+							<handicap xsi:type="xsd:double">0.0</handicap>
+							<name xsi:type="xsd:string">Collingwood Magpies</name>
+							<selectionId xsi:type="xsd:int">39983</selectionId>
+						</n2:Runner>
+						<n2:Runner xsi:type="n2:Runner">
+							<asianLineId xsi:type="xsd:int">0</asianLineId>
+							<handicap xsi:type="xsd:double">0.0</handicap>
+							<name xsi:type="xsd:string">Geelong Cats</name>
+							<selectionId xsi:type="xsd:int">244663</selectionId>
+						</n2:Runner>
+					</runners>
+					<unit xsi:nil="1"></unit>
+					<maxUnitValue xsi:type="xsd:double">0.0</maxUnitValue>
+					<minUnitValue xsi:type="xsd:double">0.0</minUnitValue>
+					<interval xsi:type="xsd:double">0.0</interval>
+					<runnersMayBeAdded xsi:type="xsd:boolean">false</runnersMayBeAdded>
+					<timezone xsi:type="xsd:string">AEST</timezone>
+					<licenceId xsi:type="xsd:int">2</licenceId>
+					<couponLinks xsi:nil="1"></couponLinks>
+					<bspMarket xsi:type="xsd:boolean">false</bspMarket>
+				</market>
+				<minorErrorCode xsi:nil="1"></minorErrorCode>
+			</n:Result>
+		</n:getMarketResponse>
+	</soap:Body>
+</soap:Envelope>

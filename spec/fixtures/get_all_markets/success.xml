@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<soap:Body>
+		<n:getAllMarketsResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+			<n:Result xsi:type="n2:GetAllMarketsResp">
+				<header xsi:type="n2:APIResponseHeader">
+					<errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+					<minorErrorCode xsi:nil="1"></minorErrorCode>
+					<sessionToken xsi:type="xsd:string">G5BZzazUKWNLUCU1yDHjDWKDJxMp3F/nzxCxHve8dls=</sessionToken>
+					<timestamp xsi:type="xsd:dateTime">2011-09-27T06:51:24.682Z</timestamp>
+				</header>
+				<errorCode xsi:type="n2:GetAllMarketsErrorEnum">OK</errorCode>
+				<marketData xsi:type="xsd:string">:100343773~Grand Final Winner~O~ACTIVE~1318051800000~\Soccer\Australian Soccer\A-League 2011/12~/1/26716549/26721473/100343773~0~2~AUS~1317106182614~10~1~577.66~N~Y:100384583~Match Odds~O~ACTIVE~1318055400000~\Soccer\Australian Soccer\A-League 2011/12\Fixtures 08 October\Newcastle v Melbourne Heart~/1/26716549/26721473/26755417/26755418/100384583~0~2~AUS~1317106182614~3~1~17.46~N~Y:100384611~Match Odds~O~ACTIVE~1318062600000~\Soccer\Australian Soccer\A-League 2011/12\Fixtures 08 October\Melbourne Victory v Sydney~/1/26716549/26721473/26755417/26755427/100384611~0~2~AUS~1317106182614~3~1~4.86~N~Y:100384639~Match Odds~O~ACTIVE~1318067100000~\Soccer\Australian Soccer\A-League 2011/12\Fixtures 08 October\Brisbane v Central Coast~/1/26716549/26721473/26755417/26755438/100384639~0~2~AUS~1317106182614~3~1~19.84~N~Y:100384667~Match Odds~O~ACTIVE~1318140000000~\Soccer\Australian Soccer\A-League 2011/12\Fixtures 09 October\Gold Coast v Wellington~/1/26716549/26721473/26755445/26755446/100384667~0~2~AUS~1317106182614~3~1~0.0~N~Y:100384695~Match Odds~O~ACTIVE~1318149000000~\Soccer\Australian Soccer\A-League 2011/12\Fixtures 09 October\Perth v Adelaide~/1/26716549/26721473/26755445/26755451/100384695~0~2~AUS~1317106182614~3~1~0.0~N~Y</marketData>
+				<minorErrorCode xsi:nil="1"></minorErrorCode>
+			</n:Result>
+		</n:getAllMarketsResponse>
+	</soap:Body>
+</soap:Envelope>

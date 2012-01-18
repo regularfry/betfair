@@ -1,0 +1,211 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/global/v3/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <n:getActiveEventTypesResponse xmlns:n="http://www.betfair.com/publicapi/v3/BFGlobalService/">
+      <n:Result xsi:type="n2:GetEventTypesResp">
+        <header xsi:type="n2:APIResponseHeader">
+          <errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+          <minorErrorCode xsi:nil="1"/>
+          <sessionToken xsi:type="xsd:string">Xh7ZPGvr9slMNP/bNJiXUZ6jBvs+YEUBQCioGgne5Uw=</sessionToken>
+          <timestamp xsi:type="xsd:dateTime">2012-01-09T11:41:16.782Z</timestamp>
+        </header>
+        <eventTypeItems xsi:type="n2:ArrayOfEventType">
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">6423</id>
+            <name xsi:type="xsd:string">American Football</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">61420</id>
+            <name xsi:type="xsd:string">Australian Rules</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">998919</id>
+            <name xsi:type="xsd:string">Bandy</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">7511</id>
+            <name xsi:type="xsd:string">Baseball</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">7522</id>
+            <name xsi:type="xsd:string">Basketball</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">998918</id>
+            <name xsi:type="xsd:string">Bowls</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">4</id>
+            <name xsi:type="xsd:string">Cricket</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">11</id>
+            <name xsi:type="xsd:string">Cycling</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">3503</id>
+            <name xsi:type="xsd:string">Darts</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">6231</id>
+            <name xsi:type="xsd:string">Financial Bets</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">998920</id>
+            <name xsi:type="xsd:string">Floorball</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">2152880</id>
+            <name xsi:type="xsd:string">Gaelic Games</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">3</id>
+            <name xsi:type="xsd:string">Golf</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">4339</id>
+            <name xsi:type="xsd:string">Greyhound Racing</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">15</id>
+            <name xsi:type="xsd:string">Greyhound - Todays Card</name>
+            <nextMarketId xsi:type="xsd:int">100432129</nextMarketId>
+            <exchangeId xsi:type="xsd:int">2</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">468328</id>
+            <name xsi:type="xsd:string">Handball</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">7</id>
+            <name xsi:type="xsd:string">Horse Racing</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">13</id>
+            <name xsi:type="xsd:string">Horse Racing - Todays Card</name>
+            <nextMarketId xsi:type="xsd:int">104635474</nextMarketId>
+            <exchangeId xsi:type="xsd:int">1</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">7524</id>
+            <name xsi:type="xsd:string">Ice Hockey</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">26420387</id>
+            <name xsi:type="xsd:string">Mixed Martial Arts</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">8</id>
+            <name xsi:type="xsd:string">Motor Sport</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">26686903</id>
+            <name xsi:type="xsd:string">Olympics 2012</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">2378961</id>
+            <name xsi:type="xsd:string">Politics</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">1477</id>
+            <name xsi:type="xsd:string">Rugby League</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">5</id>
+            <name xsi:type="xsd:string">Rugby Union</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">6422</id>
+            <name xsi:type="xsd:string">Snooker</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">1</id>
+            <name xsi:type="xsd:string">Soccer</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">14</id>
+            <name xsi:type="xsd:string">Soccer - Fixtures</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">10</id>
+            <name xsi:type="xsd:string">Special Bets</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">2</id>
+            <name xsi:type="xsd:string">Tennis</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">998917</id>
+            <name xsi:type="xsd:string">Volleyball</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+          <n2:EventType xsi:type="n2:EventType">
+            <id xsi:type="xsd:int">451485</id>
+            <name xsi:type="xsd:string">Winter Sports</name>
+            <nextMarketId xsi:type="xsd:int">0</nextMarketId>
+            <exchangeId xsi:type="xsd:int">0</exchangeId>
+          </n2:EventType>
+        </eventTypeItems>
+        <minorErrorCode xsi:nil="1"/>
+        <errorCode xsi:type="n2:GetEventsErrorEnum">OK</errorCode>
+      </n:Result>
+    </n:getActiveEventTypesResponse>
+  </soap:Body>
+</soap:Envelope>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+	<soap:Body>
+		<n:getMarketResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+			<n:Result xsi:type="n2:GetMarketResp">
+				<header xsi:type="n2:APIResponseHeader">
+					<errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+					<minorErrorCode xsi:nil="1"></minorErrorCode>
+					<sessionToken xsi:type="xsd:string">XEOkVJyFKZJ+VMFIdbYm1atWD19j/B502NQq5ekMGLc=</sessionToken>
+					<timestamp xsi:type="xsd:dateTime">2011-09-27T06:20:09.494Z</timestamp>
+				</header>
+				<errorCode xsi:type="n2:GetMarketErrorEnum">INVALID_MARKET</errorCode>
+				<market xsi:nil="1"></market>
+				<minorErrorCode xsi:nil="1"></minorErrorCode>
+			</n:Result>
+		</n:getMarketResponse>
+	</soap:Body>
+</soap:Envelope>
