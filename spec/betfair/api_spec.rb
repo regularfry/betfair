@@ -88,7 +88,7 @@ module Betfair
       it "should fail to cancel a bet on the exchange via the api" do
         savon.expects(:cancel_bets).returns(:fail)
         error_code = @bf.cancel_bet(@session_token, 3, 16939689578)        
-        error_code.should eq('API_ERROR')
+        error_code.should eq('API_ERROR - NO_SESSION')
       end
     end
     
@@ -113,7 +113,7 @@ module Betfair
       it "should return an error message given the exchange id and and array of market type ids and no session id" do
         savon.expects(:get_all_markets).returns(:fail)
         error_code = @bf.get_all_markets(@session_token, 1, [1,3], nil, nil, nil, nil)        
-        error_code.should eq('API_ERROR')        
+        error_code.should eq('API_ERROR - NO_SESSION')        
       end
     end
 
@@ -129,7 +129,7 @@ module Betfair
       it "should return an error message given the wrong exchange id or market id" do
         savon.expects(:get_market).returns(:fail)
         error_code = @bf.get_market(@session_token, 2, 10038633)        
-        error_code.should eq('INVALID_MARKET')        
+        error_code.should eq('INVALID_MARKET - OK')        
       end
     end
 
@@ -145,7 +145,7 @@ module Betfair
       it "should return an error message given the wrong exchange id or market id" do
         savon.expects(:get_market_prices_compressed).returns(:fail)
         error_code = @bf.get_market_prices_compressed(@session_token, 2, 10038633)        
-        error_code.should eq('INVALID_MARKET')        
+        error_code.should eq('INVALID_MARKET - OK')        
       end
     end
 

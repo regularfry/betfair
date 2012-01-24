@@ -8,7 +8,8 @@ module Betfair
         soap.body = { 'bf:request' => { :header => api_request_header(session_token), :bets => { 'PlaceBets' => [bf_bet] } } }
       end      
       error_code = response.to_hash[:place_bets_response][:result][:error_code]
-  	  return error_code == 'OK' ? response.to_hash[:place_bets_response][:result][:bet_results][:place_bets_result] : error_code  		
+      error_code2 = response.to_hash[:place_bets_response][:result][:header][:error_code]
+  	  return error_code == 'OK' ? response.to_hash[:place_bets_response][:result][:bet_results][:place_bets_result] : "#{error_code} - #{error_code2}"  		
     end
 
     def cancel_bet(session_token, exchange_id, bet_id)
@@ -16,15 +17,17 @@ module Betfair
         soap.body = { 'bf:request' => { :header => api_request_header(session_token), :bets => { 'CancelBets' => [ { :betId => bet_id } ] } } } # "CancelBets" has to be a string, not a symbol!
       end		
       error_code = response.to_hash[:cancel_bets_response][:result][:error_code]
-  		return error_code == 'OK' ? response.to_hash[:cancel_bets_response][:result][:bet_results][:cancel_bets_result] : error_code
+      error_code2 = response.to_hash[:cancel_bets_response][:result][:header][:error_code]
+  		return error_code == 'OK' ? response.to_hash[:cancel_bets_response][:result][:bet_results][:cancel_bets_result] : "#{error_code} - #{error_code2}"
     end
         
-  	def get_market(session_token, exchange_id, market_id, locale = nil)
+  	def get_market(session_token, exchange_id, market_id, locale = nil) 
   		response = exchange(exchange_id).request :bf, :getMarket do
   			soap.body = { 'bf:request' => { :header => api_request_header(session_token), :marketId => market_id, :locale => locale } }
   		end
   		error_code = response.to_hash[:get_market_response][:result][:error_code]
-      return error_code == 'OK' ? response.to_hash[:get_market_response][:result][:market] : error_code
+  		error_code2 = response.to_hash[:get_market_response][:result][:header][:error_code]
+      return error_code == 'OK' ? response.to_hash[:get_market_response][:result][:market] : "#{error_code} - #{error_code2}"
   	end
     
     def get_market_prices_compressed(session_token, exchange_id, market_id, currency_code = nil)
@@ -32,7 +35,8 @@ module Betfair
        soap.body = { 'bf:request' => { :header => api_request_header(session_token),  :marketId => market_id, :currencyCode => currency_code } }
       end
       error_code = response.to_hash[:get_market_prices_compressed_response][:result][:error_code]      
-      return error_code == 'OK' ? response.to_hash[:get_market_prices_compressed_response][:result][:market_prices] : error_code
+      error_code2 = response.to_hash[:get_market_prices_compressed_response][:result][:header][:error_code]
+      return error_code == 'OK' ? response.to_hash[:get_market_prices_compressed_response][:result][:market_prices] : "#{error_code} - #{error_code2}"
     end
 
     def get_active_event_types(session_token, locale = nil)
@@ -42,8 +46,9 @@ module Betfair
                                       } 
                     }
       end            
-      error_code = response.to_hash[:get_active_event_types_response][:result][:error_code]      
-      return error_code == 'OK' ? response.to_hash[:get_active_event_types_response][:result][:event_type_items][:event_type] : error_code      
+      error_code = response.to_hash[:get_active_event_types_response][:result][:error_code] 
+      error_code2 = response.to_hash[:get_active_event_types_response][:result][:header][:error_code]      
+      return error_code == 'OK' ? response.to_hash[:get_active_event_types_response][:result][:event_type_items][:event_type] : "#{error_code} - #{error_code2}"      
     end
     
     def get_all_markets(session_token, exchange_id, event_type_ids = nil, locale = nil, countries = nil, from_date = nil, to_date = nil)
@@ -56,8 +61,9 @@ module Betfair
                                       } 
                     }
       end            
-      error_code = response.to_hash[:get_all_markets_response][:result][:error_code]      
-      return error_code == 'OK' ? response.to_hash[:get_all_markets_response][:result][:market_data] : error_code      
+      error_code = response.to_hash[:get_all_markets_response][:result][:error_code] 
+      error_code2 = response.to_hash[:get_all_markets_response][:result][:header][:error_code]      
+      return error_code == 'OK' ? response.to_hash[:get_all_markets_response][:result][:market_data] : "#{error_code} - #{error_code2}"      
     end
                   
     def login(username, password, product_id, vendor_software_id, location_id, ip_address)
