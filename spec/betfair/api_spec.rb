@@ -1,4 +1,6 @@
+require 'tempfile'
 require 'spec_helper'
+
 
 module Betfair
 
@@ -204,10 +206,33 @@ module Betfair
         savon.expects(:login).returns(:success)
         proxy = nil
         logging = true
-        session_token =  Betfair::API.new(proxy, logging).login('username', 'password', 82, 0, 0, nil).to_s
-        session_token.should be_an_instance_of(String)    
+        output = capturing_stdout do
+          session_token =  Betfair::API.new(proxy, logging).login('username', 'password', 82, 0, 0, nil).to_s
+          session_token.should be_an_instance_of(String)
+        end
+        output.should_not be_empty
       end
     end
+
+
+    def capturing_stdout
+      result = nil
+      Tempfile.open("betfair_api") do |tempout|
+        replacement_stdout = File.open("/dev/stdout", "w")
+        $stdout.reopen( tempout )
+
+        begin
+          yield
+        ensure
+          $stdout.reopen( replacement_stdout )
+        end
+
+        tempout.close
+        result = File.read( tempout.path )
+      end
+      result
+    end
+
 
   end
   
