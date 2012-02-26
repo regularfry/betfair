@@ -95,6 +95,23 @@ module Betfair
     end
     
   end
+
+  
+  describe "Reading account details" do
+    before(:all) do 
+      @bf = Betfair::API.new
+      @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
+    end    
+
+    describe "reading wallet contents" do
+      it "reads the contents of the user's wallet" do
+        savon.expects( :get_account_funds ).returns( :success )
+        funds = @bf.get_account_funds( @session_token, 1 )
+        funds.should_not be_nil
+      end
+    end
+  end
+
   
   describe "Basic read methods from the API" do 
 
