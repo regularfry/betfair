@@ -119,6 +119,7 @@ Requirements for testing
 To Do
 ----------
 
+- The WOM of money in Helpers#price_string returns 0 if either all b1,b2,b3 or l1,l2,l3 are all 0
 - Add some error checking to the Betfair::Helper methods
 - Finish of the mash method, to return a nice hash of all market and
   runner info
