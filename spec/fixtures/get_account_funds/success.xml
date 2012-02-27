@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	       xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <n:getAccountFundsResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+      <n:Result xsi:type="n2:GetAccountFundsResp">
+        <header xsi:type="n2:APIResponseHeader">
+          <errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+          <minorErrorCode xsi:nil="1"></minorErrorCode>
+          <sessionToken xsi:type="xsd:string">T0fSCYclMyf2iuL4FbGQyoINXuNeaxpKxtAq/7VnAjo=</sessionToken>
+          <timestamp xsi:type="xsd:dateTime">2012-02-26T21:35:14.957Z</timestamp>
+        </header>
+        <availBalance xsi:type="xsd:double">124.75</availBalance>
+        <balance xsi:type="xsd:double">124.75</balance>
+        <commissionRetain xsi:type="xsd:double">0.0</commissionRetain>
+        <creditLimit xsi:type="xsd:double">0.0</creditLimit>
+        <currentBetfairPoints xsi:type="xsd:int">2</currentBetfairPoints>
+        <expoLimit xsi:type="xsd:double">-5000.0</expoLimit>
+        <exposure xsi:type="xsd:double">0.0</exposure>
+        <holidaysAvailable xsi:type="xsd:int">4</holidaysAvailable>
+        <minorErrorCode xsi:nil="1"></minorErrorCode>
+        <nextDiscount xsi:type="xsd:double">0.0</nextDiscount>
+        <withdrawBalance xsi:type="xsd:double">124.75</withdrawBalance>
+        <errorCode xsi:type="n2:GetAccountFundsErrorEnum">OK</errorCode>
+      </n:Result>
+    </n:getAccountFundsResponse>
+  </soap:Body>
+</soap:Envelope>
