@@ -3,7 +3,7 @@ require 'betfair'
 bf = Betfair::API.new  
 helpers = Betfair::Helpers.new
 
-session_token = bf.login('username', 'password', 82, 0, 0, nil).to_s
+session_token = bf.login('lukebyrne', 'Fr3ddyMercury', 82, 0, 0, nil).to_s
 puts session_token
 puts ""
 
