@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
-	       xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
   <soap:Body>
     <n:getAccountFundsResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
       <n:Result xsi:type="n2:GetAccountFundsResp">

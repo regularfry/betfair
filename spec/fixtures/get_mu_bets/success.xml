@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <n:getMUBetsResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+      <n:Result xsi:type="n2:GetMUBetsResp">
+        <header xsi:type="n2:APIResponseHeader">
+          <errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+          <minorErrorCode xsi:nil="1"></minorErrorCode>
+          <sessionToken xsi:type="xsd:string">tK5bi3RcJxzC7mtX6dIjCaaIe/DOvKzcX4GK8RQ7RGo=</sessionToken>
+          <timestamp xsi:type="xsd:dateTime">2012-03-11T05:35:21.219Z</timestamp>
+        </header>
+        <bets xsi:type="n2:ArrayOfMUBet">
+          <n2:MUBet xsi:type="n2:MUBet">
+            <asianLineId xsi:type="xsd:int">0</asianLineId>
+            <betId xsi:type="xsd:long">1828957078</betId>
+            <transactionId xsi:type="xsd:long">2433120449</transactionId>
+            <betStatus xsi:type="n2:BetStatusEnum">U</betStatus>
+            <betType xsi:type="n2:BetTypeEnum">L</betType>
+            <betCategoryType xsi:type="n2:BetCategoryTypeEnum">E</betCategoryType>
+            <betPersistenceType xsi:type="n2:BetPersistenceTypeEnum">NONE</betPersistenceType>
+            <marketId xsi:type="xsd:int">100470197</marketId>
+            <matchedDate xsi:type="xsd:dateTime">0001-01-01T00:00:00.000Z</matchedDate>
+            <size xsi:type="xsd:double">5.0</size>
+            <bspLiability xsi:type="xsd:double">0.0</bspLiability>
+            <placedDate xsi:type="xsd:dateTime">2012-03-11T05:28:37.000Z</placedDate>
+            <price xsi:type="xsd:double">1.89</price>
+            <selectionId xsi:type="xsd:int">5986909</selectionId>
+            <handicap xsi:type="xsd:double">0.0</handicap>
+          </n2:MUBet>
+          <n2:MUBet xsi:type="n2:MUBet">
+            <asianLineId xsi:type="xsd:int">0</asianLineId>
+            <betId xsi:type="xsd:long">1828957079</betId>
+            <transactionId xsi:type="xsd:long">2433120450</transactionId>
+            <betStatus xsi:type="n2:BetStatusEnum">U</betStatus>
+            <betType xsi:type="n2:BetTypeEnum">L</betType>
+            <betCategoryType xsi:type="n2:BetCategoryTypeEnum">E</betCategoryType>
+            <betPersistenceType xsi:type="n2:BetPersistenceTypeEnum">NONE</betPersistenceType>
+            <marketId xsi:type="xsd:int">100470197</marketId>
+            <matchedDate xsi:type="xsd:dateTime">0001-01-01T00:00:00.000Z</matchedDate>
+            <size xsi:type="xsd:double">5.0</size>
+            <bspLiability xsi:type="xsd:double">0.0</bspLiability>
+            <placedDate xsi:type="xsd:dateTime">2012-03-11T05:28:37.000Z</placedDate>
+            <price xsi:type="xsd:double">1.48</price>
+            <selectionId xsi:type="xsd:int">6230544</selectionId>
+            <handicap xsi:type="xsd:double">0.0</handicap>
+          </n2:MUBet>
+        </bets>
+        <errorCode xsi:type="n2:GetMUBetsErrorEnum">OK</errorCode>
+        <minorErrorCode xsi:nil="1"></minorErrorCode>
+        <totalRecordCount xsi:type="xsd:int">2</totalRecordCount>
+      </n:Result>
+    </n:getMUBetsResponse>
+  </soap:Body>
+</soap:Envelope>

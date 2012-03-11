@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  <soap:Body>
+    <n:getMUBetsResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+      <n:Result xsi:type="n2:GetMUBetsResp">
+        <header xsi:type="n2:APIResponseHeader">
+          <errorCode xsi:type="n2:APIErrorEnum">NO_SESSION</errorCode>
+          <minorErrorCode xsi:nil="1"></minorErrorCode>
+          <sessionToken xsi:nil="1"></sessionToken>
+          <timestamp xsi:type="xsd:dateTime">2012-03-11T05:33:20.615Z</timestamp>
+        </header>
+        <bets xsi:nil="1"></bets>
+        <errorCode xsi:type="n2:GetMUBetsErrorEnum">API_ERROR</errorCode>
+        <minorErrorCode xsi:nil="1"></minorErrorCode>
+        <totalRecordCount xsi:type="xsd:int">0</totalRecordCount>
+      </n:Result>
+    </n:getMUBetsResponse>
+  </soap:Body>
+</soap:Envelope>

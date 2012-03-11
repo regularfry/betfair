@@ -113,6 +113,26 @@ module Betfair
 
       return response.maybe_result
     end
+    
+
+    def get_mu_bets( session_token, exchange_id, market_id = 0, bet_status = 'MU', start_record = 0, record_count = 200, sort_order = 'ASC', order_by =  'PLACED_DATE') #, bet_ids = nil, , exclude_last_second = nil, matched_since = nil
+      response = exchange( exchange_id ).
+        session_request( session_token, 
+                         :getMUBets, 
+                         :get_mu_bets_response,
+                         #:betIds => bet_ids,
+                         :betStatus => bet_status,
+                         #:excludeLastSecond => exclude_last_second,
+                         :marketId => market_id,
+                         #:matchedSince => matched_since,
+                         :orderBy => order_by,
+                         :recordCount => record_count,
+                         :sortOrder => sort_order,
+                         :startRecord => start_record
+                         )
+
+      return response.maybe_result
+    end
 
 
     def login(username, password, product_id, vendor_software_id, location_id, ip_address)
