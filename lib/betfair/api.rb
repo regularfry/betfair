@@ -131,7 +131,7 @@ module Betfair
                          :startRecord => start_record
                          )
 
-      return response.maybe_result
+      return response.maybe_result( :bets, :mu_bet )
     end
 
 
