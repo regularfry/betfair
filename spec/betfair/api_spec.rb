@@ -178,21 +178,24 @@ module Betfair
     
     describe "get matched/unmatched bets success" do
       it "should return all of our unmatched and matched bets on an exchange, can take a market_id as the third arguement, plus many more" do 
-        savon.expects(:get_mu_bets).returns(:success)
+        savon.expects(:get_m_u_bets).returns(:success)
         bets = @bf.get_mu_bets(@session_token, 1)        
-        bets.should_not be_nil
+        bets.length.should eq(2)
+        bets[0][:selection_id].should eq("5986909")
+        bets[1][:selection_id].should eq("6230544")
       end
     end
     
     describe "get matched/unmatched bets"  do
       it "should return an error message given the exchange id and and array of market type ids and no session id" do
-        savon.expects(:get_mu_bets).returns(:fail)
+        savon.expects(:getMUBets).returns(:fail)
         error_code = @bf.get_mu_bets(@session_token, 1)        
         error_code.should eq('API_ERROR - NO_SESSION')        
       end
     end
 
   end
+
      
   describe "General logins, logouts methods and proxys and Savon logging etc" do 
 
