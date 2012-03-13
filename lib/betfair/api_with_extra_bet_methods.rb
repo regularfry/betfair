@@ -19,17 +19,17 @@ module Betfair
     ## API METHODS
     #
 
-    def place_bet(session_token, exchange_id, market_id, selection_id, bet_type, price, size)		
+    def place_bet(session_token, exchange_id, market_id, runner_id, bet_type, price, size, asian_line_id = 0, bet_category_type = 'E', bet_peristence_type = 'NONE', bsp_liability = 0)		
       bf_bet = { 
         :marketId           => market_id, 
-        :selectionId        => selection_id, 
+        :selectionId        => runner_id, 
         :betType            => bet_type, 
         :price              => price, 
         :size               => size, 
-        :asianLineId        => 0, 
-        :betCategoryType    => 'E', 
-        :betPersistenceType => 'NONE', 
-        :bspLiability       => 0 
+        :asianLineId        => asian_line_id, 
+        :betCategoryType    => bet_category_type, 
+        :betPersistenceType => bet_peristence_type, 
+        :bspLiability       => bsp_liability
       }
 
       response = exchange(exchange_id).
@@ -41,10 +41,10 @@ module Betfair
       return response.maybe_result( :bet_results, :place_bets_result )
     end
 
-    
-   def place_multiple_bets(session_token, exchange_id, bets)		
+
+    def place_multiple_bets(session_token, exchange_id, bets)		
       bf_bet = []
-      bets.each do |bet|
+      bets.each do bet
         bf_bet << { 
           :marketId           => bet[:market_id], 
           :selectionId        => bet[:runner_id], 
@@ -57,7 +57,7 @@ module Betfair
           :bspLiability       => bet[:bsp_liability] 
         }
       end
-
+            
       response = exchange(exchange_id).
         session_request( session_token,
                          :placeBets, 
@@ -66,8 +66,7 @@ module Betfair
 
       return response.maybe_result( :bet_results, :place_bets_result )
     end
-      
-    
+
     def cancel_bet(session_token, exchange_id, bet_id)
       bf_bet = { :betId => bet_id }
 
@@ -80,10 +79,9 @@ module Betfair
       return response.maybe_result( :bet_results, :cancel_bets_result )
     end
     
-    
     def cancel_multiple_bets(session_token, exchange_id, bets)
       bf_bet = []
-      bets.each { |bet_id| bf_bet << { :betId => bet_id } }
+      bets.each { |bet| bf_bet << { :betId => bet[:id] } }
 
       response = exchange(exchange_id).
         session_request( session_token,
@@ -93,7 +91,7 @@ module Betfair
       
       return response.maybe_result( :bet_results, :cancel_bets_result )
     end
-    
+
 
     def get_market(session_token, exchange_id, market_id, locale = nil) 
       response = exchange(exchange_id).
@@ -171,7 +169,7 @@ module Betfair
                          :startRecord => start_record
                          )
 
-      return response.maybe_result( :bets, :mu_bet )
+      return response.maybe_result
     end
 
 

@@ -78,7 +78,29 @@ module Betfair
       end
     end
     
-    describe "cancel bet success"  do
+    describe "place multiple bets success"do
+      it "should place mutliple bets on the exchange via the api" do
+        savon.expects(:place_bets).returns(:success)
+        bets = []
+        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
+        bets = @bf.place_multiple_bets(@session_token, 1, bets)       
+        bets.should_not be_nil
+      end
+    end
+    
+    describe "place multiple bets fail"  do
+      it "should return an error message" do
+        savon.expects(:place_bets).returns(:fail)
+        bets = []
+        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }                  
+        error_code = @bf.place_multiple_bets(@session_token, 1, bets)      
+        error_code[:result_code].should eq('INVALID_SIZE')
+      end
+    end
+      
+    describe "cancel bet success" do
       it "should cancel a bet on the exchange via the api" do
         savon.expects(:cancel_bets).returns(:success)
         bet = @bf.cancel_bet(@session_token, 3, 16939689578)       
@@ -90,6 +112,22 @@ module Betfair
       it "should fail to cancel a bet on the exchange via the api" do
         savon.expects(:cancel_bets).returns(:fail)
         error_code = @bf.cancel_bet(@session_token, 3, 16939689578)        
+        error_code.should eq('API_ERROR - NO_SESSION')
+      end
+    end
+    
+    describe "cancel multiple bets success" do
+      it "should cancel a bet on the exchange via the api" do
+        savon.expects(:cancel_bets).returns(:success)
+        bets = @bf.cancel_multiple_bets(@session_token, 3, [16939689578, 16939689579, 169396895710])       
+        bets.should_not be_nil
+      end
+    end
+    
+    describe "cancel bet fail"  do
+      it "should fail to cancel mulitple bets on the exchange via the api" do
+        savon.expects(:cancel_bets).returns(:fail)
+        error_code = @bf.cancel_multiple_bets(@session_token, 3, [16939689578, 16939689579, 169396895710])        
         error_code.should eq('API_ERROR - NO_SESSION')
       end
     end
@@ -178,15 +216,17 @@ module Betfair
     
     describe "get matched/unmatched bets success" do
       it "should return all of our unmatched and matched bets on an exchange, can take a market_id as the third arguement, plus many more" do 
-        savon.expects(:get_mu_bets).returns(:success)
+        savon.expects(:getMUBets).returns(:success)
         bets = @bf.get_mu_bets(@session_token, 1)        
-        bets.should_not be_nil
+        #bets.length.should eq(2)
+        bets[0][:selection_id].should eq("5986909")
+        bets[1][:selection_id].should eq("6230544")
       end
     end
     
     describe "get matched/unmatched bets"  do
       it "should return an error message given the exchange id and and array of market type ids and no session id" do
-        savon.expects(:get_mu_bets).returns(:fail)
+        savon.expects(:getMUBets).returns(:fail)
         error_code = @bf.get_mu_bets(@session_token, 1)        
         error_code.should eq('API_ERROR - NO_SESSION')        
       end
