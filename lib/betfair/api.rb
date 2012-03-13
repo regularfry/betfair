@@ -2,7 +2,6 @@ module Betfair
 
   class API
 
-
     ## Some handy constants...
 
     EXCHANGE_IDS = {
