@@ -212,11 +212,18 @@ module Betfair
     end
 
     describe "login fail"  do
-      it "should return an error" do
+      it "should return an error with a bad product" do
         savon.expects(:login).returns(:fail)
-        error_code = @bf.login('username', 'password', 82, 0, 0, nil) 
+        error_code = @bf.login('username', 'password', 82, 0, 0, nil)
         error_code.should eq('PRODUCT_REQUIRES_FUNDED_ACCOUNT')        
       end
+
+      it "should return an error with a bad password" do
+        savon.expects(:login).returns(:bad_password)
+        error_code = @bf.login('username', 'password', 82, 0, 0, nil)
+        error_code.should eq("INVALID_USERNAME_OR_PASSWORD")
+      end
+
     end
 
     describe "proxy success"  do
