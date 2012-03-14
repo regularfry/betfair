@@ -76,8 +76,11 @@ module Betfair
                                         :ipAddress => ip_address 
                                        } 
                     }
-      end      
-      session_token(response.to_hash[:login_response][:result][:header])       
+      end
+      error_code = response.to_hash[:login_response][:result][:error_code]
+      return error_code =~ /\A(OK|API_ERROR)\Z/ ? 
+        session_token(response.to_hash[:login_response][:result][:header]) : 
+        error_code
     end
       
     def exchange(exchange_id)   
