@@ -203,28 +203,40 @@ module Betfair
       @bf = Betfair::API.new
     end
 
-    describe "login success"  do
-      it "should return a session token" do
-        savon.expects(:login).returns(:success)
-        session_token = @bf.login('username', 'password', 82, 0, 0, nil).to_s
-        session_token.should be_an_instance_of(String)        
+
+    describe "login" do
+      let( :response ) { @bf.login('username', 'password', 82, 0, 0, nil) }
+      subject { response }
+
+      before do savon.expects( api_call ).returns( api_response ) end
+      
+      let( :api_call ) { :login }
+
+      describe "success"  do
+        let( :api_response ) { :success }
+
+        it { should be_a_kind_of(String) }
+        it { should be_success }
+      end
+
+      describe "failure"  do
+        describe "with a bad product code" do
+          let( :api_response ) { :fail }
+
+          it { should match('PRODUCT_REQUIRES_FUNDED_ACCOUNT') }
+          it { should_not be_success }
+        end
+
+        describe "with a bad password" do
+          let( :api_response ) { :bad_password }
+          
+          it { should match("INVALID_USERNAME_OR_PASSWORD") }
+          it { should_not be_success }
+        end
+
       end
     end
 
-    describe "login fail"  do
-      it "should return an error with a bad product" do
-        savon.expects(:login).returns(:fail)
-        error_code = @bf.login('username', 'password', 82, 0, 0, nil)
-        error_code.should eq('PRODUCT_REQUIRES_FUNDED_ACCOUNT')        
-      end
-
-      it "should return an error with a bad password" do
-        savon.expects(:login).returns(:bad_password)
-        error_code = @bf.login('username', 'password', 82, 0, 0, nil)
-        error_code.should eq("INVALID_USERNAME_OR_PASSWORD")
-      end
-
-    end
 
     describe "proxy success"  do
       it "should return a session token" do
@@ -240,7 +252,7 @@ module Betfair
         savon.expects(:login).returns(:fail)
         proxy = 'http://localhost:8888'
         error_code = Betfair::API.new(proxy).login('username', 'password', 82, 0, 0, nil)
-        error_code.should eq('PRODUCT_REQUIRES_FUNDED_ACCOUNT')         
+        error_code.should match('PRODUCT_REQUIRES_FUNDED_ACCOUNT')         
       end
     end
 
