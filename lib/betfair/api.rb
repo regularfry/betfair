@@ -15,6 +15,19 @@ module Betfair
     BET_TYPE_BACK = 'B'
 
 
+    ## Success and Failure get mixed in to API result values
+    # so that you can tell the difference easily - just call
+    # #success? on the result to find out if it worked
+    module Success
+      def success?; true; end
+    end # module Success
+
+
+    module Failure
+      def success?; false; end
+    end # module Failure
+
+
     ## API METHODS
     #
 
@@ -183,8 +196,8 @@ module Betfair
                                           :vendorSoftwareId => vendor_software_id, 
                                           :locationId       => location_id, 
                                           :ipAddress        => ip_address )
-      
-      session_token(response[:header])
+
+      return response.maybe_result( :header, :session_token )
     end
 
     #
@@ -299,7 +312,11 @@ module Betfair
 
 
       def maybe_result( *path )
-        success? ? path.inject(self){|m,r| m[r]} : format_error()
+        if success?
+          path.inject(self){|m,r| m[r]}.extend( Success )
+        else
+          format_error().extend( Failure )
+        end
       end
 
       
