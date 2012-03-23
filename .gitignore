@@ -5,4 +5,5 @@ pkg/*
 .rvmrc
 examples/bar.rb
 examples/doh.rb
+examples/doh_latest.rb
 examples/doh.log
