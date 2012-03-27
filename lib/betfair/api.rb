@@ -55,9 +55,9 @@ module Betfair
 
     
    def place_multiple_bets(session_token, exchange_id, bets)		
-      bf_bet = []
+      bf_bets = []
       bets.each do |bet|
-        bf_bet << { 
+        bf_bets << { 
           :marketId           => bet[:market_id], 
           :selectionId        => bet[:runner_id], 
           :betType            => bet[:bet_type], 
@@ -74,12 +74,11 @@ module Betfair
         session_request( session_token,
                          :placeBets, 
                          :place_bets_response,
-                         :bets => { 'PlaceBets' => bf_bet } )
+                         :bets => { 'PlaceBets' => bf_bets } )
 
       return response.maybe_result( :bet_results, :place_bets_result )
     end
-      
-    
+          
     def cancel_bet(session_token, exchange_id, bet_id)
       bf_bet = { :betId => bet_id }
 
@@ -94,19 +93,35 @@ module Betfair
     
     
     def cancel_multiple_bets(session_token, exchange_id, bets)
-      bf_bet = []
-      bets.each { |bet_id| bf_bet << { :betId => bet_id } }
+      bf_bets = []
+      bets.each { |bet_id| bf_bets << { :betId => bet_id } }
 
       response = exchange(exchange_id).
         session_request( session_token,
                          :cancelBets, 
                          :cancel_bets_response,
-                         :bets => { 'CancelBets' => bf_bet } ) # "CancelBets" has to be a string, not a symbol!
+                         :bets => { 'CancelBets' => bf_bets } ) # "CancelBets" has to be a string, not a symbol!
       
       return response.maybe_result( :bet_results, :cancel_bets_result )
     end
     
+    def cancel_bet_by_market(session_token, exchange_id, market_id)
+    
+    end
+    
+    def cancel_bets_by_market(session_token, exchange_id, market_ids)
+      
+    end
+    
+    def update_bet(session_token, exchange_id, market_id)
+      
+    end
 
+    def update_bets(session_token, exchange_id, market_ids)
+      
+    end
+    
+    
     def get_market(session_token, exchange_id, market_id, locale = nil) 
       response = exchange(exchange_id).
         session_request( session_token, 
@@ -198,6 +213,14 @@ module Betfair
                                           :ipAddress        => ip_address )
 
       return response.maybe_result( :header, :session_token )
+    end
+    
+    def keep_alive
+      
+    end
+    
+    def logout
+      
     end
 
     #
@@ -412,17 +435,18 @@ module Betfair
       # parsing first the auxiliary price info
       aux = pieces.first
       aux.gsub! "\0", '\:'
-      aux_hash =   {  :market_id            => aux.split('~')[0].to_i,
-        :currency             => aux.split('~')[1].to_s,
-        :market_status        => aux.split('~')[2].to_s,
-        :in_play_delay        => aux.split('~')[3].to_i,
-        :number_of_winners    => aux.split('~')[4].to_i,
-        :market_information   => aux.split('~')[5].to_s,
-        :discount_allowed     => aux.split('~')[6] == 'true' ? true : false,
-        :market_base_rate     => aux.split('~')[7].to_s,
-        :refresh_time_in_milliseconds => aux.split('~')[8].to_i,
-        :removed_runners      => aux.split('~')[9].to_s,
-        :bsp_market           => aux.split('~')[10] == 'Y' ? true : false
+      aux_hash =   {  
+        :market_id                      => aux.split('~')[0].to_i,
+        :currency                       => aux.split('~')[1].to_s,
+        :market_status                  => aux.split('~')[2].to_s,
+        :in_play_delay                  => aux.split('~')[3].to_i,
+        :number_of_winners              => aux.split('~')[4].to_i,
+        :market_information             => aux.split('~')[5].to_s,
+        :discount_allowed               => aux.split('~')[6] == 'true' ? true : false,
+        :market_base_rate               => aux.split('~')[7].to_s,
+        :refresh_time_in_milliseconds   => aux.split('~')[8].to_i,
+        :removed_runners                => aux.split('~')[9].to_s,
+        :bsp_market                     => aux.split('~')[10] == 'Y' ? true : false
       }
 
       # now iterating over the prices excluding the first piece that we already parsed above 
@@ -498,6 +522,21 @@ module Betfair
       return price			  		
     end
 
+    # Pass in the string returned from the get_all_markets() API call and get back a proper hash
+    def split_markets_string(markets)
+      foo = []
+      if markets.is_a?(String)
+        markets.split(':').each do |market|
+          bar = market.split('~')
+          doh = { market_id: bar[0].to_i, market_name: bar[1], market_type: bar[2], market_status: bar[3], event_date: bar[4].to_i, menu_path: bar[5], event_heirachy: bar[6], 
+                  bet_delay: bar[7].to_i, exchange_id: bar[8].to_i, iso3_country_code: bar[9], last_refresh: bar[10].to_i, number_of_runners: bar[11].to_i, number_of_winners: bar[12].to_i, 
+                  total_amount_matched: bar[13].to_f, bsp_market: bar[14], turning_in_play: bar[15] }        
+          foo << doh if !doh[:market_name].nil?
+        end
+      end
+      return foo
+    end
+    
   end
-
+  
 end

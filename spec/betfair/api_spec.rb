@@ -11,6 +11,15 @@ module Betfair
       @helpers = Betfair::Helpers.new
     end
     
+    describe "Create a hash from the get_all_markets API call"  do
+      it "pulls the relevant stuff out of get_all_markets and puts it in a hash" do
+        savon.expects(:get_all_markets).returns(:success)
+        markets = @bf.get_all_markets(@session_token, 2)
+        markets = @helpers.split_markets_string(markets)
+        markets.should_not be_nil        
+      end
+    end
+    
     describe "Create a hash for the market details"  do
       it "pulls the relevant stuff out of market details and puts it in a hash" do
         savon.expects(:get_market).returns(:success)
