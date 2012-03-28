@@ -8,33 +8,35 @@ Installation
 Betfair is available through
 [Rubygems](http://rubygems.org/gems/betfair) and can be installed via:
 
-    gem install betfair
+  gem install betfair
 
 OR with bundler: `gem 'betfair'` and `bundle install`
 
 ------------
 Introduction
 ------------
+In a irb console
 
-    irb
+  require 'betfair'
 
-    require 'betfair'
+From a Gemfile
 
-or from a Gemfile
+  gem 'betfair'
 
-    gem 'betfair'
 
-    # create a client for the General API so that you can log in.
-    bf = Betfair::API.new
+Load the general api class
+
+  bf = Betfair::API.new
 
 If you want to use a proxy or turn on Savon's logging then just pass
 in like so:
 
-    # This is a local squid proxy I tunnel to from my local 
-    # machine to access the host server in UK for dev purposes.
-    proxy = 'http://localhost:8888' 
-    logging = true
-    bf = Betfair::API.new(proxy, logging)
+This is a local squid proxy I tunnel to from my local 
+machine to access the host server in UK for dev purposes.
+
+  proxy = 'http://localhost:8888' 
+  logging = true
+  bf = Betfair::API.new(proxy, logging)
 
 Proxies can be useful if you want to host on a cloud service such as
 Heroku, as you will be denied access to the Betfair API from the
@@ -44,13 +46,10 @@ as the UK.
 -------------------
 General API METHODS
 -------------------
-login
-
-logout
-
-keep_alive
 
 
+Login
+------
 At the heart of the Betfair API is the `session_token`. In order to
 get one of these simply call:
 
@@ -67,102 +66,152 @@ on the level of Betfair API access that you have.
 You can ignore the rest and leave as is, but they refer to Vendor
 Software Id, Location Id, Ip Address as required by the Betfair API.
 
------
-Read
------
 
-    markets = 
-      bf.get_all_markets(session_token, 1, [1,3], nil, nil, nil, nil)
+Logout
+------
+It is considered good API etiquette to logout once you are done. 
+  
+  foo = bf.logout(session_token)
 
-    # We can either pull the market ID out of `markets`, or use a
-    # stored value:
 
-    market_id = 100386338
-    exchange_id = 1 # or 2 for the Australian exchange
+Keep Alive
+----------
+Your session_token will expire after 20 mins of inactivity. 
+Supposedly the token gets refreshed with every API call you make, 
+but I am not convinced of this.
+This call will refresh it for another 20 mins.
+  
+  session_token = bf.keep_alive(session_token)
 
-    # get_market returns a Hash with the details of the identified
-    # market, including the commission as
-    # `details[:market_base_rate]`, and information on the runners
-    # (including their ids, which you need to place a bet) as
-    # `details[:runners]`.
+
+-----------------------------
+Read-Only Betting API METHODS
+-----------------------------
+
+
+Get All Markets
+---------------
+
+The API GetAllMarkets service allows you to retrieve information about all of 
+the markets that are currently active or suspended on the given exchange.    
+
+  exchange_id     = 1       # 1 == UK, 2 == AUS
+  event_type_ids  = [1,3]   # Full list here http://data.betfair.com/sportids.htm
+  locale          = nil 
+  countries       = nil 
+  from_date       = Time.now.utc
+  to_date         = 30.minutes.from_now.utc
     
-    details =
-      bf.get_market(session_token, exchange_id, market_id)
-
-    # This returns an encoded string with some back prices and depths
-    # for the given market.
-
-    prices = bf.get_market_prices_compressed(session_token, 
-                                             exchange_id, 
-                                             market_id)
-
-    helpers = Betfair::Helpers.new
-
-    helpers.market_info(details)
-    helpers.combine(details, prices)
-
-    # The get_all_markets api call returns all markets in one huge
-    # string.  This helper provides them all in handy hashes with
-    # market id as key.  
-
-    helpers.all_markets(markets)
+  markets = 
+    bf.get_all_markets(session_token, exchange_id, event_type_ids, locale, countries, from_date, to_date)
 
 
----
-Bet
----
+Get MU Bets    
+-----------
+The API GetMUBets service allows you to retrieve information about all 
+your matched and unmatched bets on a particular exchange server.
+  
+  exchange_id   = 1
+  market_id     = 12345
+  bet_status    = 'MU'
+  start_record  = 0
+  record_count  = 200
+  sort_order    = 'ASC'
+  order_by      = 'PLACED_DATE'
+  
+  mu_bets =
+    bf.get_mu_bets(session_token, exchange_id, market_id, bet_status, start_record, record_count, sort_order, order_by)
+
+
+Get Market
+----------
+The API GetMarket service allows the customer to input a Market ID and 
+retrieve all static market data for the market requested.
+  
+  exchange_id   = 1
+  market_id     = 12345
+  locale        = nil
+  
+  market 
+    = bf.get_market(session_token, exchange_id, market_id, locale)
+
+
+Get Market Prices Compressed
+----------------------------
+The API GetMarketPricesCompressed service allows you to retrieve 
+dynamic market data for a given Market ID in a compressed format. 
+  
+  exchange_id       = 1
+  market_id         = 12345
+  currency_code     = nil
+  
+  price = 
+    bf.get_market_prices_compressed(session_token, exchange_id, market_id, currency_code)
+
+
+Get Active Event Types
+----------------------
+The API GetAllEventTypes service allows the customer to retrieve lists of all categories of sports 
+(Games, Event Types) that have at least one market associated with them, 
+regardless of whether that market is now closed for betting. 
+  
+  locale = nil
+  
+  active_event_types = 
+    bf.get_active_event_types(session_token, locale)
+
+
+Get All Markets
+---------------
+  bf.get_all_markets
+
+
+Get Account Funds
+-----------------
+The API GetAccountFunds service allows you to retrieve information 
+about your local wallet on a particular exchange server. 
+
+  funds = 
+    bf.get_account_funds
+
+-------------------------
+Bet Placement API METHODS
+-------------------------
 
     bf.place_bet(session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)
     bf.cancel_bet(session_token, 1, 16939730542)
     
     There are a few other methods in here as well, mostly for doing multiple bets and  mutliple update
+    
+    place_bet
+
+    place_multiple_bets
+
+    update_bet
+
+    update_multiple_bets
+
+    cancel_bet
+
+    cancel_multiple_bets
+
+    cancel_bet_by_market
+    
+-------
+Helpers
+-------
+
+helpers = Betfair::Helpers.new
+
+helpers.market_info(details)
+helpers.combine(details, prices)
+
+# The get_all_markets api call returns all markets in one huge
+# string.  This helper provides them all in handy hashes with
+# market id as key.  
 
 
----
-Foo
----
-# General API METHODS
-#
-
-login
-
-logout
-
-keep_alive
-
-## Read-Only Betting API METHODS
-#
-
-get_mu_bets
-
-get_market
-
-get_market_prices_compressed
-
-get_active_event_types
-
-get_all_markets
-
-get_account_funds
-
-## Bet Placement API METHODS
-#
-place_bet
-
-place_multiple_bets
-
-update_bet
-
-update_multiple_bets
-
-cancel_bet
-
-cancel_multiple_bets
-
-cancel_bet_by_market
-
-## HELPER METHODS
-#
+helpers.all_markets(markets)
 
 all_markets
 
@@ -179,8 +228,6 @@ prices_complete
 prices_string
 
 split_markets_string
-
-
 
 ----------
 API Limits
