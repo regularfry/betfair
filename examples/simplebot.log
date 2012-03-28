@@ -1,0 +1,4 @@
+# Logfile created on 2012-03-28 17:07:58 +0800 by logger.rb/25413
+I, [2012-03-28 17:08:20#2169]  INFO -- : username - ["GBR"] - INVALID_USERNAME_OR_PASSWORD - OK - exiting
+I, [2012-03-28 17:08:53#2309]  INFO -- : username - ["GBR"] - INVALID_USERNAME_OR_PASSWORD - OK - exiting
+I, [2012-03-28 17:09:24#2317]  INFO -- : username - ["GBR"] - INVALID_USERNAME_OR_PASSWORD - OK - exiting

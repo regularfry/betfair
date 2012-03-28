@@ -91,7 +91,6 @@ Read-Only Betting API METHODS
 
 Get All Markets
 ---------------
-
 The API GetAllMarkets service allows you to retrieve information about all of 
 the markets that are currently active or suspended on the given exchange.    
 
@@ -161,73 +160,145 @@ regardless of whether that market is now closed for betting.
     bf.get_active_event_types(session_token, locale)
 
 
-Get All Markets
----------------
-  bf.get_all_markets
-
-
 Get Account Funds
 -----------------
 The API GetAccountFunds service allows you to retrieve information 
 about your local wallet on a particular exchange server. 
-
+  
+  exchange_id = 1
+  
   funds = 
-    bf.get_account_funds
+    bf.get_account_funds(session_token, exchange_id)
 
 -------------------------
 Bet Placement API METHODS
 -------------------------
 
-    bf.place_bet(session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)
-    bf.cancel_bet(session_token, 1, 16939730542)
-    
-    There are a few other methods in here as well, mostly for doing multiple bets and  mutliple update
-    
-    place_bet
 
-    place_multiple_bets
+Place Bet
+---------
+The API PlaceBets service allows you to place multiple (1 to 60) bets on a single Market. 
 
-    update_bet
+  exchange_id     = 1
+  market_id       = 122435
+  selection_id    = 58805
+  bet_type        = 'B' # Or L for Lay
+  price           = 2.0
+  size            = 2.0
+  
+  place_bet = 
+    bf.(session_token, exchange_id, market_id, selection_id, bet_type, price, size) 
 
-    update_multiple_bets
 
-    cancel_bet
+Place Multiple Bets
+-------------------
+The API PlaceBets service allows you to place multiple (1 to 60) bets on a single Market. 
 
-    cancel_multiple_bets
+  exchange_id     = 1
+  bets            = []
+  bets <<  { market_id: 12345, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
+              bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
+  
+  place_multiple_bets =               
+    bf.place_multiple_bets(session_token, exchange_id, bets)
 
-    cancel_bet_by_market
+
+Update Bet
+----------
+The API UpdateBets service allows you to edit multiple (1 to 15) bets on a single Market.
+
+  exchange_id = 1
+  bet_id: 1234, 
+  new_bet_persistence_type = 'NONE'
+  new_price = 10.0
+  new_size = 10.0 
+  old_bet_persistence_type = 'NONE'
+  old_price= 5.0
+  old_size = 5.0
+  
+  update_bet = 
+    bf.update_bet(session_token, exchange_id, bet_id, new_bet_persistence_type, new_price, new_size, old_bet_persistence_type, old_price, old_size)
+
+
+Update Multiple Bets
+--------------------
+The API UpdateBets service allows you to edit multiple (1 to 15) bets on a single Market.
+  
+  exchange_id = 1
+  bets = []
+  bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
+            old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }
+            
+  update_multiple_bets  =
+   bf.update_multiple_bets(session_token, exchange_id, bets)
+  
+  
+Cancel Bet
+----------
+The API CancelBets service allows you to cancel multiple unmatched (1 to 40) bets placed on a single Market.
+
+  exchange_id   = 1
+  bet_id        = 1235
+  
+  cancel_bet = 
+    bf.cancel_bet(session_token, exchange_id, bet_id)
+
+
+Cancel Multiple Bets
+--------------------
+The API CancelBets service allows you to cancel multiple unmatched (1 to 40) bets placed on a single Market.
+  
+  exchange_id   = 1
+  bet_ids       = [16939689578, 16939689579, 169396895710]
+
+  cancel_multiple_bets = 
+    bf.cancel_multiple_bets(session_token, exchange_id, bets)
+
     
 -------
 Helpers
 -------
 
+
 helpers = Betfair::Helpers.new
 
-helpers.market_info(details)
-helpers.combine(details, prices)
 
-# The get_all_markets api call returns all markets in one huge
-# string.  This helper provides them all in handy hashes with
-# market id as key.  
-
-
+All Markets
+-----------
 helpers.all_markets(markets)
 
-all_markets
 
-market_info
+Market Info
+-----------
+helpers.market_info
 
-combine
 
-details
+Combine
+-----------
+helpers.combine
 
-prices
+Details
+-----------
+helpers.details
 
-prices_complete
+Prices
+-----------
+helpers.prices
 
-prices_string
 
-split_markets_string
+Prices Complete
+---------------
+helpers.prices_complete
+
+
+Prices String
+-------------
+helpers.prices_string
+
+
+Split Markets String
+--------------------
+helpers.split_markets_string
 
 ----------
 API Limits
@@ -254,8 +325,7 @@ To Do
 
 - The WOM of money in Helpers#price_string returns 0 if either all b1,b2,b3 or l1,l2,l3 are all 0
 - Add some error checking to the Betfair::Helper methods
-- Finish of the mash method, to return a nice hash of all market and
-  runner info
+- Finish of the mash method, to return a nice hash of all market and runner info
 - Write a spec for the mashed method
 
 ----------

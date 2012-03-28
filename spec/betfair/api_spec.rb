@@ -73,7 +73,7 @@ module Betfair
     describe "place bet success"  do
       it "should place a bet on the exchange via the api" do
         savon.expects(:place_bets).returns(:success)
-        bet = @bf.place_bet(@session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)       
+        bet = @bf.place_bet(@session_token, 1, 104184109, 58805, 'B', 2.0, 2.0)       
         bet[:bet_id].should eq('16939643915')
       end
     end
@@ -128,8 +128,8 @@ module Betfair
       it "should update mutliple bets on the exchange via the api" do
         savon.expects(:update_bets).returns(:success)
         bets = []
-        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
-                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
+        bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
+                  old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }
         bets = @bf.update_multiple_bets(@session_token, 1, bets)       
         bets[:new_bet_id].should eq('19052919856')
       end
@@ -139,8 +139,8 @@ module Betfair
       it "should return an error message" do
         savon.expects(:update_bets).returns(:fail)
         bets = []
-        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
-                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }                  
+        bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
+                  old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }                 
         bets = @bf.update_multiple_bets(@session_token, 1, bets)      
         bets[:result_code].should eq('BET_TAKEN_OR_LAPSED')
       end
