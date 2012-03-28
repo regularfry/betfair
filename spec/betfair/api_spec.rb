@@ -3,7 +3,7 @@ require 'spec_helper'
 
 module Betfair
 
-  describe "Helper methods for mashing the data from the API" do 
+  describe "Helper methods for mashing the data from the API - " do 
 
     before(:all) do 
       @bf = Betfair::API.new
@@ -63,7 +63,7 @@ module Betfair
 
   end
 
-  describe "Placing and cancelling bets" do
+  describe "Placing and cancelling bets - " do
     
     before(:all) do 
       @bf = Betfair::API.new
@@ -179,9 +179,8 @@ module Betfair
     end
     
   end
-
   
-  describe "Reading account details" do
+  describe "Reading account details - " do
     before(:all) do 
       @bf = Betfair::API.new
       @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
@@ -195,9 +194,8 @@ module Betfair
       end
     end
   end
-
   
-  describe "Basic read methods from the API" do 
+  describe "Basic read methods from the API - " do 
 
     before(:all) do 
       @bf = Betfair::API.new
@@ -312,7 +310,7 @@ module Betfair
 
   end
      
-  describe "General logins, logouts methods and proxys and Savon logging etc" do 
+  describe "General logins, logouts methods and proxys and Savon logging etc - " do 
 
     before(:all) do 
       @bf = Betfair::API.new

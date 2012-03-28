@@ -28,7 +28,7 @@ module Betfair
     end # module Failure
 
 
-    ## API METHODS
+    ## Bet Placement API METHODS
     #
 
     def place_bet(session_token, exchange_id, market_id, selection_id, bet_type, price, size)		
@@ -151,9 +151,28 @@ module Betfair
       raise 'Service not available in product id of 82'
     end
     
-    def cancel_bets_by_market(session_token, exchange_id, market_ids)
-      raise 'Service not available in product id of 82'
+    ## Read-Only Betting API METHODS
+    #
+    
+    def get_mu_bets( session_token, exchange_id, market_id = 0, bet_status = 'MU', start_record = 0, record_count = 200, sort_order = 'ASC', order_by =  'PLACED_DATE') #, bet_ids = nil, , exclude_last_second = nil, matched_since = nil
+      response = exchange(exchange_id).
+        session_request( session_token, 
+                         :getMUBets, 
+                         :get_mu_bets_response,
+                         #:betIds => bet_ids,
+                         :betStatus => bet_status,
+                         #:excludeLastSecond => exclude_last_second,
+                         :marketId => market_id,
+                         #:matchedSince => matched_since,
+                         :orderBy => order_by,
+                         :recordCount => record_count,
+                         :sortOrder => sort_order,
+                         :startRecord => start_record
+                         )
+
+      return response.maybe_result( :bets, :mu_bet )
     end
+    
     
     def get_market(session_token, exchange_id, market_id, locale = nil) 
       response = exchange(exchange_id).
@@ -213,27 +232,6 @@ module Betfair
 
       return response.maybe_result
     end
-    
-
-    def get_mu_bets( session_token, exchange_id, market_id = 0, bet_status = 'MU', start_record = 0, record_count = 200, sort_order = 'ASC', order_by =  'PLACED_DATE') #, bet_ids = nil, , exclude_last_second = nil, matched_since = nil
-      response = exchange(exchange_id).
-        session_request( session_token, 
-                         :getMUBets, 
-                         :get_mu_bets_response,
-                         #:betIds => bet_ids,
-                         :betStatus => bet_status,
-                         #:excludeLastSecond => exclude_last_second,
-                         :marketId => market_id,
-                         #:matchedSince => matched_since,
-                         :orderBy => order_by,
-                         :recordCount => record_count,
-                         :sortOrder => sort_order,
-                         :startRecord => start_record
-                         )
-
-      return response.maybe_result( :bets, :mu_bet )
-    end
-
 
     def login(username, password, product_id, vendor_software_id, location_id, ip_address)
       response = @global_service.request( :login, 
@@ -247,6 +245,9 @@ module Betfair
 
       return response.maybe_result( :header, :session_token )
     end
+    
+    ## General API METHODS
+    #
     
     def keep_alive(session_token)
       response = @global_service.
@@ -392,7 +393,10 @@ module Betfair
 
 
   class Helpers  	  	
-
+    
+    ## HELPER METHODS
+    #
+    
     def all_markets(markets)
       market_hash = {}
       markets.gsub! '\:', "\0"

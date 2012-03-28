@@ -44,8 +44,7 @@ as the UK.
 At the heart of the Betfair API is the `session_token`. In order to
 get one of these simply call:
 
-    session_token = bf.login('username', 'password', 
-                             ::Betfair::API;;PRODUCT_ID_FREE, 0, 0, nil)
+    session_token = bf.login('username', 'password', 82, 0, 0, nil)
 
 Username and Password are fairly obvious.  The `session_token` value
 you get back responds to #success? which will tell you whether login
@@ -55,7 +54,7 @@ was successful or not.  If `session_token.success?` returns false,
 82 is the standard Product Id, you may have a different one depending
 on the level of Betfair API access that you have.
 
-You can ignore the rest as leave as is, but they refer to Vendor
+You can ignore the rest and leave as is, but they refer to Vendor
 Software Id, Location Id, Ip Address as required by the Betfair API.
 
 -----
@@ -104,7 +103,6 @@ Bet
 
     bf.place_bet(session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)
     bf.cancel_bet(session_token, 1, 16939730542)
-
 
 ----------
 API Limits
