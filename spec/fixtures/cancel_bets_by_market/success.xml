@@ -1,0 +1,17 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <soap:Body>
+      <n:cancelBetsByMarketResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+         <n:Result xsi:type="n2:CancelBetsByMarketResp">
+            <header xsi:type="n2:APIResponseHeader">
+               <errorCode xsi:type="n2:APIErrorEnum">SERVICE_NOT_AVAILABLE_IN_PRODUCT</errorCode>
+               <minorErrorCode xsi:nil="1"/>
+               <sessionToken xsi:type="xsd:string">FDUK0eLFOTk4NhbiiuhtJANO5oa6Fg79NxW0H9Dn4Fs=</sessionToken>
+               <timestamp xsi:type="xsd:dateTime">2012-03-28T00:42:52.881Z</timestamp>
+            </header>
+            <results xsi:nil="1"/>
+            <errorCode xsi:type="n2:CancelBetsByMarketErrorEnum">API_ERROR</errorCode>
+            <minorErrorCode xsi:nil="1"/>
+         </n:Result>
+      </n:cancelBetsByMarketResponse>
+   </soap:Body>
+</soap:Envelope>

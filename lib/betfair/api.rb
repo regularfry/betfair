@@ -106,19 +106,19 @@ module Betfair
     end
     
     def cancel_bet_by_market(session_token, exchange_id, market_id)
-    
+      raise 'Service not available in product id of 82'
     end
     
     def cancel_bets_by_market(session_token, exchange_id, market_ids)
-      
+      raise 'Service not available in product id of 82'
     end
     
     def update_bet(session_token, exchange_id, market_id)
-      
+      raise 'To Do'
     end
 
     def update_bets(session_token, exchange_id, market_ids)
-      
+      raise 'To Do'      
     end
     
     
@@ -173,7 +173,7 @@ module Betfair
 
 
     def get_account_funds( session_token, exchange_id )
-      response = exchange( exchange_id ).
+      response = exchange(exchange_id).
         session_request( session_token, 
                          :getAccountFunds, 
                          :get_account_funds_response )
@@ -183,7 +183,7 @@ module Betfair
     
 
     def get_mu_bets( session_token, exchange_id, market_id = 0, bet_status = 'MU', start_record = 0, record_count = 200, sort_order = 'ASC', order_by =  'PLACED_DATE') #, bet_ids = nil, , exclude_last_second = nil, matched_since = nil
-      response = exchange( exchange_id ).
+      response = exchange(exchange_id).
         session_request( session_token, 
                          :getMUBets, 
                          :get_mu_bets_response,
@@ -216,11 +216,11 @@ module Betfair
     end
     
     def keep_alive
-      
+      raise 'To Do'
     end
     
     def logout
-      
+      raise 'To Do'
     end
 
     #
@@ -523,11 +523,12 @@ module Betfair
     end
 
     # Pass in the string returned from the get_all_markets() API call and get back a proper hash
-    def split_markets_string(markets)
+    def split_markets_string(string)
+      string_raw = string
       foo = []
-      if markets.is_a?(String)
-        markets.split(':').each do |market|
-          bar = market.split('~')
+      if string_raw.is_a?(String)
+        string_raw.split(':').each do |string|
+          bar = string.split('~')
           doh = { market_id: bar[0].to_i, market_name: bar[1], market_type: bar[2], market_status: bar[3], event_date: bar[4].to_i, menu_path: bar[5], event_heirachy: bar[6], 
                   bet_delay: bar[7].to_i, exchange_id: bar[8].to_i, iso3_country_code: bar[9], last_refresh: bar[10].to_i, number_of_runners: bar[11].to_i, number_of_winners: bar[12].to_i, 
                   total_amount_matched: bar[13].to_f, bsp_market: bar[14], turning_in_play: bar[15] }        

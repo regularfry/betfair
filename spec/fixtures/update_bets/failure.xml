@@ -1,0 +1,27 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/exchange/v5/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <soap:Body>
+      <n:updateBetsResponse xmlns:n="http://www.betfair.com/publicapi/v5/BFExchangeService/">
+         <n:Result xsi:type="n2:UpdateBetsResp">
+            <header xsi:type="n2:APIResponseHeader">
+               <errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+               <minorErrorCode xsi:nil="1"/>
+               <sessionToken xsi:type="xsd:string">FDUK0eLFOTk4NhbiiuhtJANO5oa6Fg79NxW0H9Dn4Fs=</sessionToken>
+               <timestamp xsi:type="xsd:dateTime">2012-03-28T00:38:51.318Z</timestamp>
+            </header>
+            <betResults xsi:type="n2:ArrayOfUpdateBetsResult">
+               <n2:UpdateBetsResult xsi:type="n2:UpdateBetsResult">
+                  <betId xsi:type="xsd:long">19052919856</betId>
+                  <newBetId xsi:type="xsd:long">0</newBetId>
+                  <sizeCancelled xsi:type="xsd:double">0.0</sizeCancelled>
+                  <newSize xsi:type="xsd:double">0.0</newSize>
+                  <newPrice xsi:type="xsd:double">0.0</newPrice>
+                  <resultCode xsi:type="n2:UpdateBetsResultEnum">BET_TAKEN_OR_LAPSED</resultCode>
+                  <success xsi:type="xsd:boolean">false</success>
+               </n2:UpdateBetsResult>
+            </betResults>
+            <errorCode xsi:type="n2:UpdateBetsErrorEnum">OK</errorCode>
+            <minorErrorCode xsi:nil="1"/>
+         </n:Result>
+      </n:updateBetsResponse>
+   </soap:Body>
+</soap:Envelope>
