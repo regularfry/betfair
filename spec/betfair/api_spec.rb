@@ -74,7 +74,7 @@ module Betfair
       it "should place a bet on the exchange via the api" do
         savon.expects(:place_bets).returns(:success)
         bet = @bf.place_bet(@session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)       
-        bet.should_not be_nil
+        bet[:bet_id].should eq('16939643915')
       end
     end
     
@@ -93,7 +93,7 @@ module Betfair
         bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
                   bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
         bets = @bf.place_multiple_bets(@session_token, 1, bets)       
-        bets.should_not be_nil
+        bets[:bet_id].should eq('16939643915')
       end
     end
     
@@ -107,12 +107,50 @@ module Betfair
         error_code[:result_code].should eq('INVALID_SIZE')
       end
     end
+        
+    describe "update bet success"  do
+      it "should update a bet on the exchange via the api" do
+        savon.expects(:update_bets).returns(:success)
+        bet = @bf.update_bet(@session_token, 1, 1234, 'NONE', 1.6, 10.0, 'NONE', 1.5, 5.0)       
+        bet[:new_bet_id].should eq('19052919856')
+      end
+    end
+
+    describe "update bet fail after trying to change an already changed bet"  do
+      it "should return an error message" do
+        savon.expects(:update_bets).returns(:fail)
+        bet = @bf.update_bet(@session_token, 1, 1234, 'NONE', 1.6, 10.0, 'NONE', 1.5, 5.0)       
+        bet[:result_code].should eq('BET_TAKEN_OR_LAPSED')
+      end
+    end
+    
+    describe "update multiple bets success"do
+      it "should update mutliple bets on the exchange via the api" do
+        savon.expects(:update_bets).returns(:success)
+        bets = []
+        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
+        bets = @bf.update_multiple_bets(@session_token, 1, bets)       
+        bets[:new_bet_id].should eq('19052919856')
+      end
+    end
+    
+    describe "update multiple bets fail"  do
+      it "should return an error message" do
+        savon.expects(:update_bets).returns(:fail)
+        bets = []
+        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }                  
+        bets = @bf.update_multiple_bets(@session_token, 1, bets)      
+        bets[:result_code].should eq('BET_TAKEN_OR_LAPSED')
+      end
+    end        
       
     describe "cancel bet success" do
       it "should cancel a bet on the exchange via the api" do
         savon.expects(:cancel_bets).returns(:success)
         bet = @bf.cancel_bet(@session_token, 3, 16939689578)       
-        bet.should_not be_nil
+        bet[:result_code].should eq('REMAINING_CANCELLED')
       end
     end
     
@@ -128,7 +166,7 @@ module Betfair
       it "should cancel a bet on the exchange via the api" do
         savon.expects(:cancel_bets).returns(:success)
         bets = @bf.cancel_multiple_bets(@session_token, 3, [16939689578, 16939689579, 169396895710])       
-        bets.should_not be_nil
+        bets[:result_code].should eq('REMAINING_CANCELLED')
       end
     end
     
@@ -186,7 +224,7 @@ module Betfair
       it "should return the details for a market given the exchange id and market id" do
         savon.expects(:get_market).returns(:success)
         market = @bf.get_market(@session_token, 2, 10038633)        
-        market.should_not be_nil        
+        market[:market_id].should eq('100386338')        
       end
     end
 
@@ -218,6 +256,7 @@ module Betfair
       it "should return active event types given the locale" do
         savon.expects(:get_active_event_types).returns(:success)
         events = @bf.get_active_event_types(@session_token, 'en')
+        events[0][:id].should eq('6423')
         events.should_not be_nil
       end    
     end
@@ -226,7 +265,6 @@ module Betfair
       it "should return all of our unmatched and matched bets on an exchange, can take a market_id as the third arguement, plus many more" do 
         savon.expects(:getMUBets).returns(:success)
         bets = @bf.get_mu_bets(@session_token, 1)        
-        #bets.length.should eq(2)
         bets[0][:selection_id].should eq("5986909")
         bets[1][:selection_id].should eq("6230544")
       end

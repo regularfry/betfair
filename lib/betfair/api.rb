@@ -77,8 +77,51 @@ module Betfair
                          :bets => { 'PlaceBets' => bf_bets } )
 
       return response.maybe_result( :bet_results, :place_bets_result )
+    end      
+    
+    def update_bet(session_token, exchange_id, bet_id, new_bet_persitence_type, new_price, new_size, old_bet_persitance_type, old_price, old_size)
+       bf_bet = { 
+          :betId                  => bet_id, 
+          :newBetPersistenceType  => new_bet_persitence_type, 
+          :newPrice               => new_price, 
+          :newSize                => new_size, 
+          :oldBetPersistenceType  => old_bet_persitance_type, 
+          :oldPrice               => old_price, 
+          :oldSize                => old_size
+        }
+
+        response = exchange(exchange_id).
+          session_request( session_token,
+                           :updateBets, 
+                           :update_bets_response,
+                           :bets => { 'UpdateBets' => [bf_bet] } )
+
+        return response.maybe_result( :bet_results, :update_bets_result )
     end
-          
+
+    def update_multiple_bets(session_token, exchange_id, bets)
+      bf_bets = []
+      bets.each do |bet|
+        bf_bets << { 
+          :betId                  => bet[:bet_id], 
+          :newBetPersistenceType  => bet[:new_bet_persitence_type], 
+          :newPrice               => bet[:new_price], 
+          :newSize                => bet[:new_size], 
+          :oldBetPersistenceType  => bet[:old_bet_persitance_type], 
+          :oldPrice               => bet[:old_price], 
+          :oldSize                => bet[:old_size] 
+        }
+      end
+
+      response = exchange(exchange_id).
+        session_request( session_token,
+                         :updateBets, 
+                         :update_bets_response,
+                         :bets => { 'UpdateBets' => bf_bets } )
+
+      return response.maybe_result( :bet_results, :update_bets_result )     
+    end
+    
     def cancel_bet(session_token, exchange_id, bet_id)
       bf_bet = { :betId => bet_id }
 
@@ -90,8 +133,7 @@ module Betfair
       
       return response.maybe_result( :bet_results, :cancel_bets_result )
     end
-    
-    
+        
     def cancel_multiple_bets(session_token, exchange_id, bets)
       bf_bets = []
       bets.each { |bet_id| bf_bets << { :betId => bet_id } }
@@ -112,15 +154,6 @@ module Betfair
     def cancel_bets_by_market(session_token, exchange_id, market_ids)
       raise 'Service not available in product id of 82'
     end
-    
-    def update_bet(session_token, exchange_id, market_id)
-      raise 'To Do'
-    end
-
-    def update_bets(session_token, exchange_id, market_ids)
-      raise 'To Do'      
-    end
-    
     
     def get_market(session_token, exchange_id, market_id, locale = nil) 
       response = exchange(exchange_id).
