@@ -215,12 +215,20 @@ module Betfair
       return response.maybe_result( :header, :session_token )
     end
     
-    def keep_alive
-      raise 'To Do'
+    def keep_alive(session_token)
+      response = @global_service.
+        session_request( session_token,
+                         :keep_alive, 
+                         :keep_alive_response )
+      return response.maybe_result( :header, :session_token)
     end
     
-    def logout
-      raise 'To Do'
+    def logout(session_token)
+      response = @global_service.
+        session_request( session_token,
+                         :logout, 
+                         :logout_response )
+      return response.maybe_result( :header, :session_token)
     end
 
     #

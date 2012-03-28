@@ -232,11 +232,43 @@ module Betfair
       end
     end
     
-    describe "get matched/unmatched bets"  do
+    describe "get matched/unmatched bets fail"  do
       it "should return an error message given the exchange id and and array of market type ids and no session id" do
         savon.expects(:getMUBets).returns(:fail)
         error_code = @bf.get_mu_bets(@session_token, 1)        
         error_code.should eq('API_ERROR - NO_SESSION')        
+      end
+    end
+    
+    describe "logout success" do
+      it "should successfully log out of the API" do
+        savon.expects(:logout).returns(:success)
+        session_token = @bf.logout(@session_token)
+        session_token.should eq(nil) # Returns a blank session_token
+      end
+    end
+    
+    describe "logout fail" do
+      it "should un-successfully log out of the API" do
+        savon.expects(:logout).returns(:fail)
+        error_code = @bf.logout(@session_token)
+        error_code.should eq('API_ERROR - NO_SESSION')
+      end
+    end
+    
+    describe "keepalive success" do
+      it "should successfully keep alive the session token" do
+        savon.expects(:keep_alive).returns(:success)
+        session_token = @bf.keep_alive(@session_token)
+        session_token.should_not eq(nil) # Doesnt return anything
+      end
+    end
+    
+    describe "keepalive fail" do
+      it "should un-successfully keep alive the session token" do
+        savon.expects(:keep_alive).returns(:fail)
+        error_code = @bf.keep_alive(@session_token)
+        error_code.should eq(' - NO_SESSION')
       end
     end
 

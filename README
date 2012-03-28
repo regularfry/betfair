@@ -105,6 +105,12 @@ Bet
     bf.place_bet(session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)
     bf.cancel_bet(session_token, 1, 16939730542)
 
+
+----------
+API Limits
+----------
+http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64
+
 ------------
 Requirements
 ------------
