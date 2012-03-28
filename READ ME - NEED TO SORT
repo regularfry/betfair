@@ -1,0 +1,248 @@
+BETFAIR API
+===========
+
+------------
+Installation
+------------
+
+Betfair is available through
+[Rubygems](http://rubygems.org/gems/betfair) and can be installed via:
+
+    gem install betfair
+
+OR with bundler: `gem 'betfair'` and `bundle install`
+
+------------
+Introduction
+------------
+
+    irb
+
+    require 'betfair'
+
+or from a Gemfile
+
+    gem 'betfair'
+
+    # create a client for the General API so that you can log in.
+    bf = Betfair::API.new
+
+If you want to use a proxy or turn on Savon's logging then just pass
+in like so:
+
+    # This is a local squid proxy I tunnel to from my local 
+    # machine to access the host server in UK for dev purposes.
+    proxy = 'http://localhost:8888' 
+    logging = true
+    bf = Betfair::API.new(proxy, logging)
+
+Proxies can be useful if you want to host on a cloud service such as
+Heroku, as you will be denied access to the Betfair API from the
+USA. Just proxy via a server from a country that Betfair allows, such
+as the UK.
+
+-------------------
+General API METHODS
+-------------------
+login
+
+logout
+
+keep_alive
+
+
+At the heart of the Betfair API is the `session_token`. In order to
+get one of these simply call:
+
+    session_token = bf.login('username', 'password', 82, 0, 0, nil)
+
+Username and Password are fairly obvious.  The `session_token` value
+you get back responds to #success? which will tell you whether login
+was successful or not.  If `session_token.success?` returns false,
+`session_token.to_s` will give you the error message.
+
+82 is the standard Product Id, you may have a different one depending
+on the level of Betfair API access that you have.
+
+You can ignore the rest and leave as is, but they refer to Vendor
+Software Id, Location Id, Ip Address as required by the Betfair API.
+
+-----
+Read
+-----
+
+    markets = 
+      bf.get_all_markets(session_token, 1, [1,3], nil, nil, nil, nil)
+
+    # We can either pull the market ID out of `markets`, or use a
+    # stored value:
+
+    market_id = 100386338
+    exchange_id = 1 # or 2 for the Australian exchange
+
+    # get_market returns a Hash with the details of the identified
+    # market, including the commission as
+    # `details[:market_base_rate]`, and information on the runners
+    # (including their ids, which you need to place a bet) as
+    # `details[:runners]`.
+    
+    details =
+      bf.get_market(session_token, exchange_id, market_id)
+
+    # This returns an encoded string with some back prices and depths
+    # for the given market.
+
+    prices = bf.get_market_prices_compressed(session_token, 
+                                             exchange_id, 
+                                             market_id)
+
+    helpers = Betfair::Helpers.new
+
+    helpers.market_info(details)
+    helpers.combine(details, prices)
+
+    # The get_all_markets api call returns all markets in one huge
+    # string.  This helper provides them all in handy hashes with
+    # market id as key.  
+
+    helpers.all_markets(markets)
+
+
+---
+Bet
+---
+
+    bf.place_bet(session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)
+    bf.cancel_bet(session_token, 1, 16939730542)
+    
+    There are a few other methods in here as well, mostly for doing multiple bets and  mutliple update
+
+
+---
+Foo
+---
+# General API METHODS
+#
+
+login
+
+logout
+
+keep_alive
+
+## Read-Only Betting API METHODS
+#
+
+get_mu_bets
+
+get_market
+
+get_market_prices_compressed
+
+get_active_event_types
+
+get_all_markets
+
+get_account_funds
+
+## Bet Placement API METHODS
+#
+place_bet
+
+place_multiple_bets
+
+update_bet
+
+update_multiple_bets
+
+cancel_bet
+
+cancel_multiple_bets
+
+cancel_bet_by_market
+
+## HELPER METHODS
+#
+
+all_markets
+
+market_info
+
+combine
+
+details
+
+prices
+
+prices_complete
+
+prices_string
+
+split_markets_string
+
+
+
+----------
+API Limits
+----------
+http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64
+
+------------
+Requirements
+------------
+
+    savon
+
+------------------------
+Requirements for testing
+------------------------
+
+    savon_spec
+    rspec
+    rake
+
+----------
+To Do
+----------
+
+- The WOM of money in Helpers#price_string returns 0 if either all b1,b2,b3 or l1,l2,l3 are all 0
+- Add some error checking to the Betfair::Helper methods
+- Finish of the mash method, to return a nice hash of all market and
+  runner info
+- Write a spec for the mashed method
+
+----------
+Contribute
+----------
+
+I have only added the Betfair API method calls that I need. 
+
+Feel free to fork this repo, add what you need to with the relevant
+RSpec tests and send me a pull request.
+
+-------
+License
+-------
+
+(The MIT License)
+
+Copyright (c) 2011 Luke Byrne
+
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of this software and associated documentation files (the
+'Software'), to deal in the Software without restriction, including
+without limitation the rights to use, copy, modify, merge, publish,
+distribute, sublicense, and/or sell copies of the Software, and to
+permit persons to whom the Software is furnished to do so, subject to
+the following conditions:
+
+The above copyright notice and this permission notice shall be
+included in all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED 'AS IS', WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE
+LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION
+OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION
+WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
