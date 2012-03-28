@@ -220,7 +220,7 @@ module Betfair
         session_request( session_token,
                          :keep_alive, 
                          :keep_alive_response )
-      return response.maybe_result( :header, :session_token)
+      return response.maybe_result( :header, :session_token )
     end
     
     def logout(session_token)
@@ -228,7 +228,7 @@ module Betfair
         session_request( session_token,
                          :logout, 
                          :logout_response )
-      return response.maybe_result( :header, :session_token)
+      return response.maybe_result( :header, :session_token )
     end
 
     #
