@@ -4,7 +4,7 @@ class SimpleBot
   require 'date'
   require 'active_support/core_ext' # Only really need this one to do the easy datetime stuff such as 30.minutes.from_now.utc
   
-  LOG_PATH            = 'simplebot.log' # Absolute path to where you want put your log file
+  LOG_PATH            = '/Users/lukebyrne/Sites/current/betfair/examples/simplebot/simplebot.log' # Absolute path to where you want put your log file
   
   USERNAME            = 'username'              # BF Usernmae
   PASSWORD            = 'password'              # BF Password
