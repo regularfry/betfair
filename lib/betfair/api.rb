@@ -416,7 +416,7 @@ module Betfair
           :bet_delay            => foo[7].to_s,
           :exchange_id          => foo[8].to_i,
           :iso3_country_code    => foo[9].to_s,
-          # bf returns in this case time in Epoch, but in milliseconds
+          # bf returns in this case time in Epoch, but in milliseconds 
           :last_refresh         => Time.at(foo[10].to_i/1000),
           :number_of_runners    => foo[11].to_i,
           :number_of_winners    => foo[12].to_i,
