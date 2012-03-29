@@ -403,7 +403,8 @@ module Betfair
       markets = markets.split ":"
       markets.each do |piece|
         piece.gsub! "\0", '\:'
-        market_hash[piece.split('~')[0].to_i] = { :market_id            => piece.split('~')[0].to_i,
+        market_hash[piece.split('~')[0].to_i] = { 
+          :market_id            => piece.split('~')[0].to_i,
           :market_name          => piece.split('~')[1].to_s,
           :market_type          => piece.split('~')[2].to_s,
           :market_status        => piece.split('~')[3].to_s,
@@ -424,6 +425,23 @@ module Betfair
         } 
       end
       return market_hash
+    end
+    
+    # Pass in the string returned from the get_all_markets() API call and get back a proper hash
+    # This duplicates the helper above, not sure where this came from one of contributors must have added it.
+    def split_markets_string(string)
+      string_raw = string
+      foo = []
+      if string_raw.is_a?(String)
+        string_raw.split(':').each do |string|
+          bar = string.split('~')
+          doh = { market_id: bar[0].to_i, market_name: bar[1], market_type: bar[2], market_status: bar[3], event_date: bar[4].to_i, menu_path: bar[5], event_heirachy: bar[6], 
+                  bet_delay: bar[7].to_i, exchange_id: bar[8].to_i, iso3_country_code: bar[9], last_refresh: bar[10].to_i, number_of_runners: bar[11].to_i, number_of_winners: bar[12].to_i, 
+                  total_amount_matched: bar[13].to_f, bsp_market: bar[14], turning_in_play: bar[15] }        
+          foo << doh if !doh[:market_name].nil?
+        end
+      end
+      return foo
     end
 
     def market_info(details)
@@ -565,22 +583,6 @@ module Betfair
       price[:wom] = combined_b / ( combined_b + combined_l ) unless combined_b.nil? or combined_l.nil?
 
       return price			  		
-    end
-
-    # Pass in the string returned from the get_all_markets() API call and get back a proper hash
-    def split_markets_string(string)
-      string_raw = string
-      foo = []
-      if string_raw.is_a?(String)
-        string_raw.split(':').each do |string|
-          bar = string.split('~')
-          doh = { market_id: bar[0].to_i, market_name: bar[1], market_type: bar[2], market_status: bar[3], event_date: bar[4].to_i, menu_path: bar[5], event_heirachy: bar[6], 
-                  bet_delay: bar[7].to_i, exchange_id: bar[8].to_i, iso3_country_code: bar[9], last_refresh: bar[10].to_i, number_of_runners: bar[11].to_i, number_of_winners: bar[12].to_i, 
-                  total_amount_matched: bar[13].to_f, bsp_market: bar[14], turning_in_play: bar[15] }        
-          foo << doh if !doh[:market_name].nil?
-        end
-      end
-      return foo
     end
     
   end
