@@ -410,14 +410,14 @@ module Betfair
           :market_type          => foo[2].to_s,
           :market_status        => foo[3].to_s,
           # bf returns in this case time in Epoch, but in milliseconds
-          :event_date           => Time.at(foo[4].to_i/1000),
+          :event_date           => Time.at(foo[4].to_i/1000).utc,
           :menu_path            => foo[5].to_s,
           :event_hierarchy      => foo[6].to_s,
           :bet_delay            => foo[7].to_s,
           :exchange_id          => foo[8].to_i,
           :iso3_country_code    => foo[9].to_s,
           # bf returns in this case time in Epoch, but in milliseconds
-          :last_refresh         => Time.at(foo[10].to_i/1000),
+          :last_refresh         => Time.at(foo[10].to_i/1000).utc,
           :number_of_runners    => foo[11].to_i,
           :number_of_winners    => foo[12].to_i,
           :total_amount_matched => foo[13].to_f,
@@ -439,8 +439,8 @@ module Betfair
           
           bsp_market        = bar[14] == 'Y' ? true : false
           turning_in_play   = bar[15] == 'Y' ? true : false
-          event_date        = Time.at(bar[4].to_i/1000)
-          last_refresh      = Time.at(bar[10].to_i/1000)
+          event_date        = Time.at(bar[4].to_i/1000).utc
+          last_refresh      = Time.at(bar[10].to_i/1000).utc
           
           doh = { market_id: bar[0].to_i, market_name: bar[1], market_type: bar[2], market_status: bar[3], event_date: event_date, menu_path: bar[5], event_heirachy: bar[6], 
                   bet_delay: bar[7].to_i, exchange_id: bar[8].to_i, iso3_country_code: bar[9], last_refresh: last_refresh, number_of_runners: bar[11].to_i, number_of_winners: bar[12].to_i, 
