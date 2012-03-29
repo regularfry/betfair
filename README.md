@@ -235,13 +235,12 @@ Pump it into this helper and you will get back a nice hash.
 This returns a hash with the `market_id` as the key.
 
 foo[100388290] returns
-
+    
     { :market_id=>100388290, :market_name=>"Premiers 2012", :market_type=>"O", :market_status=>"ACTIVE", :event_date=>2012-03-24 16:20:00 +0800, 
       :menu_path=>"\\Australian Rules\\AFL 2012", :event_hierarchy=>"/61420/26759191/100388290", :bet_delay=>"0", :exchange_id=>2, 
-      :iso3_country_code=>"AUS", :last_refresh=>2012-03-29 15:10:10 +0800, :number_of_runners=>18, :number_of_winners=>1, 
-      :total_amount_matched=>193146.36, :bsp_market=>false, :turning_in_play=>false 
-    }
-    
+      :iso3_country_code=>"AUS", :last_refresh=>2012-03-29 16:35:21 +0800, :number_of_runners=>18, :number_of_winners=>1, 
+      :total_amount_matched=>193599.58, :bsp_market=>false, :turning_in_play=>false
+    } 
 
 ## Split Markets String ##
 This function does the same as the #all_markets method. Not sure how/why it has been 
@@ -253,11 +252,11 @@ duplicated, but it has so here is how it works.
 The output looks a little different to the #all_markets method.
 
 foo.first returns
-
-    { :market_id=>100388290, :market_name=>"Premiers 2012", :market_type=>"O", :market_status=>"ACTIVE", :event_date=>1332577200000, 
+    
+    { :market_id=>100388290, :market_name=>"Premiers 2012", :market_type=>"O", :market_status=>"ACTIVE", :event_date=>2012-03-24 16:20:00 +0800, 
       :menu_path=>"\\Australian Rules\\AFL 2012", :event_heirachy=>"/61420/26759191/100388290", :bet_delay=>0, :exchange_id=>2, 
-      :iso3_country_code=>"AUS", :last_refresh=>1333005010983, :number_of_runners=>18, :number_of_winners=>1, 
-      :total_amount_matched=>193146.36, :bsp_market=>"N", :turning_in_play=>"N" 
+      :iso3_country_code=>"AUS", :last_refresh=>2012-03-29 16:35:21 +0800, :number_of_runners=>18, :number_of_winners=>1, 
+      :total_amount_matched=>193599.58, :bsp_market=>false, :turning_in_play=>false
     }
     
 ## Market Info ##
@@ -318,12 +317,12 @@ Helper to deal with the prices string from a market.
     foo = helpers.prices_complete(prices)
 
 foo.first returns 
-
+    
     [ 39983, {:selection_id=>39983, :order_index=>0, :total_amount_matched=>89899.79, :last_price_matched=>4.2, :handicap=>0.0, 
       :reduction_factor=>0.0, :vacant=>false, :far_sp_price=>0.0, :near_sp_price=>0.0, :actual_sp_price=>0.0, :prices_string=>nil, 
-      :runner_matched=>0, :last_back_price=>0, :wom=>0.6054936499440416, :b1=>4.2, :b1_available=>430.35, :b2=>4.1, :b2_available=>311.51, 
-      :b3=>3.85, :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
-    ]
+      :runner_matched=>0, :last_back_price=>0, :wom=>0.5516492637413943, :b1=>4.2, :b1_available=>429.06, :b2=>4.1, :b2_available=>310.58, 
+      :b3=>3.85, :b3_available=>4.75, :l1=>4.3, :l1_available=>20.0, :l2=>4.4, :l2_available=>355.0, :l3=>4.6, :l3_available=>230.0}
+    ] 
 
 ## Prices String ##
 
@@ -331,7 +330,8 @@ foo.first returns
     foo = helpers.price_string(prices, true)
 
     { :prices_string=>nil, :runner_matched=>0, :last_back_price=>0, :wom=>0.6054936499440416, :b1=>4.2, :b1_available=>430.35, :b2=>4.1, :b2_available=>311.51, :b3=>3.85, 
-      :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
+      :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3
+    }
     
 # Extra 
 ## API Limits ##
