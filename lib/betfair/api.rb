@@ -397,7 +397,7 @@ module Betfair
     ## HELPER METHODS
     #
     
-    def all_markets(markets)
+    def #(markets)
       market_hash = {}
       markets.gsub! '\:', "\0"
       markets = markets.split ":"
