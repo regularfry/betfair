@@ -195,7 +195,7 @@ The API UpdateBets service allows you to edit multiple (1 to 15) bets on a singl
               old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }     
               
     update_multiple_bets  =
-     bf.update_multiple_bets(session_token, exchange_id, bets
+     bf.update_multiple_bets(session_token, exchange_id, bets)
   
   
 ## Cancel Bet ##
