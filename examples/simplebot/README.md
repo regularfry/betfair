@@ -39,11 +39,11 @@ Please don't blame me if you lose money using the bot.
 Daemonize
 ----------
 
-`ruby daemonize.rb` run will test the script and output to the logfile location specified
+`ruby daemonize.rb run` will test the script and output to the logfile location specified
 
 or 
 
-`ruby daemonize.rb` start will start the script as a daemon  and output to the logfile location specified in the background with a pidfile in the root folder
+`ruby daemonize.rb start` will start the script as a daemon  and output to the logfile location specified in the background with a pidfile in the root folder
 
 
 Monit
