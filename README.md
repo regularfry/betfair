@@ -234,7 +234,7 @@ Pump it into this helper and you will get back a nice hash.
     
     foo = helpers.all_markets(markets)
 
-This returns a hash with the market id as the key.
+This returns a hash with the `market_id` as the key.
 
 foo[100388290] returns
 
