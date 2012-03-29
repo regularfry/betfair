@@ -3,11 +3,11 @@
 
 Install it with [RubyGems](http://rubygems.org/gems/betfair)
 
-    gem install betfair
+      gem install betfair
 
 or add this to your Gemfile if you use [Bundler](http://gembundler.com/):
 
-    gem 'betfair'    
+      gem 'betfair'    
 
 ## Introduction ## 
 In a irb console
