@@ -86,7 +86,7 @@ the markets that are currently active or suspended on the given exchange.
   markets = 
     bf.get_all_markets(session_token, exchange_id, event_type_ids, locale, countries, from_date, to_date)
 
-## Get MU Bets ##    
+##Get MU Bets##    
 The API GetMUBets service allows you to retrieve information about all 
 your matched and unmatched bets on a particular exchange server.
 
@@ -163,6 +163,8 @@ The API PlaceBets service allows you to place multiple (1 to 60) bets on a singl
     bets            = []
     bets <<  { market_id: 12345, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
                 bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
+    bets <<  { market_id: 12345, runner_id: 1234, bet_type: 'L', price: 1.5, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
 
     place_multiple_bets =               
       bf.place_multiple_bets(session_token, exchange_id, bets)
@@ -189,7 +191,9 @@ The API UpdateBets service allows you to edit multiple (1 to 15) bets on a singl
     bets = []
     bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
               old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }
-          
+    bets << { bet_id: 1235, new_bet_persistence_type: 'NONE', new_price: 2.0, new_size: 10.0, 
+              old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }     
+              
     update_multiple_bets  =
      bf.update_multiple_bets(session_token, exchange_id, bets
   
