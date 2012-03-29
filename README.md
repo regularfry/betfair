@@ -325,7 +325,7 @@ foo.first returns
       :b3=>3.85, :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
     ]
 
-### Prices String ##
+## Prices String ##
 
     prices = bf.get_market_prices_compressed(session_token, 2, 100388290)
     foo = helpers.price_string(prices, true)
@@ -333,7 +333,7 @@ foo.first returns
     { :prices_string=>nil, :runner_matched=>0, :last_back_price=>0, :wom=>0.6054936499440416, :b1=>4.2, :b1_available=>430.35, :b2=>4.1, :b2_available=>311.51, :b3=>3.85, 
       :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
     
-# Extra
+# Extra 
 ## API Limits ##
 [Betfair API Limits](http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64)
 
