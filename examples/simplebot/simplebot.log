@@ -1,0 +1,26 @@
+# Logfile created on 2012-03-29 17:24:04 +0800 by logger.rb/25413
+I, [2012-03-29 17:24:08#18217]  INFO -- : lukebyrne - ["GBR"] - INVALID_USERNAME_OR_PASSWORD - OK - exiting
+I, [2012-03-29 17:24:36#18355]  INFO -- : lukebyrne - ["GBR"] - Logged in successfully with lukebyrne, token returned - cqf+rWQQejBcN6r9jCQOk7IfSevehWZ6/3I/7lnqdsA=. Fetching Horses from ["GBR"] and looking to lay odds on runners
+I, [2012-03-29 17:24:36#18355]  INFO -- : lukebyrne - ["GBR"] - Fetching markets
+I, [2012-03-29 17:24:38#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - Checking prices for market_id
+I, [2012-03-29 17:24:39#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - Checking existing bets for market_id
+I, [2012-03-29 17:24:40#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - 0 bets already placed for market_id
+I, [2012-03-29 17:24:40#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - Bets have already been placed for runners AND/OR no more runners to lay below odds of 2.0
+I, [2012-03-29 17:24:43#18355]  INFO -- : lukebyrne - ["GBR"] - 100478079 - Checking prices for market_id
+I, [2012-03-29 17:24:44#18355]  INFO -- : lukebyrne - ["GBR"] - 100478079 - Checking existing bets for market_id
+I, [2012-03-29 17:24:45#18355]  INFO -- : lukebyrne - ["GBR"] - 100478079 - 0 bets already placed for market_id
+I, [2012-03-29 17:24:45#18355]  INFO -- : lukebyrne - ["GBR"] - 100478079 - Placing bets [{:average_price_matched=>"0.0", :bet_id=>"0", :result_code=>"INVALID_SIZE", :size_matched=>"0.0", :success=>false, :"@xsi:type"=>"n2:PlaceBetsResult"}, {:average_price_matched=>"0.0", :bet_id=>"0", :result_code=>"INVALID_SIZE", :size_matched=>"0.0", :success=>false, :"@xsi:type"=>"n2:PlaceBetsResult"}, {:average_price_matched=>"0.0", :bet_id=>"0", :result_code=>"INVALID_SIZE", :size_matched=>"0.0", :success=>false, :"@xsi:type"=>"n2:PlaceBetsResult"}]
+I, [2012-03-29 17:24:48#18355]  INFO -- : lukebyrne - ["GBR"] - 100478095 - Checking prices for market_id
+I, [2012-03-29 17:24:51#18355]  INFO -- : lukebyrne - ["GBR"] - 100478095 - Checking existing bets for market_id
+I, [2012-03-29 17:24:52#18355]  INFO -- : lukebyrne - ["GBR"] - 100478095 - 0 bets already placed for market_id
+I, [2012-03-29 17:24:52#18355]  INFO -- : lukebyrne - ["GBR"] - 100478095 - Bets have already been placed for runners AND/OR no more runners to lay below odds of 2.0
+I, [2012-03-29 17:24:55#18355]  INFO -- : lukebyrne - ["GBR"] - 100478159 - Checking prices for market_id
+I, [2012-03-29 17:24:55#18355]  INFO -- : lukebyrne - ["GBR"] - 100478159 - Checking existing bets for market_id
+I, [2012-03-29 17:24:56#18355]  INFO -- : lukebyrne - ["GBR"] - 100478159 - 0 bets already placed for market_id
+I, [2012-03-29 17:24:57#18355]  INFO -- : lukebyrne - ["GBR"] - 100478159 - Placing bets {:average_price_matched=>"0.0", :bet_id=>"0", :result_code=>"INVALID_SIZE", :size_matched=>"0.0", :success=>false, :"@xsi:type"=>"n2:PlaceBetsResult"}
+I, [2012-03-29 17:25:00#18355]  INFO -- : lukebyrne - ["GBR"] - Fetching markets
+I, [2012-03-29 17:25:02#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - Checking prices for market_id
+I, [2012-03-29 17:25:03#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - Checking existing bets for market_id
+I, [2012-03-29 17:25:03#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - 0 bets already placed for market_id
+I, [2012-03-29 17:25:03#18355]  INFO -- : lukebyrne - ["GBR"] - 100478067 - Bets have already been placed for runners AND/OR no more runners to lay below odds of 2.0
+I, [2012-03-29 17:25:06#18355]  INFO -- : lukebyrne - ["GBR"] - 100478079 - Checking prices for market_id
