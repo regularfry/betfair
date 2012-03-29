@@ -292,7 +292,7 @@ Helpers
 =======
 
 
-helpers = Betfair::Helpers.new
+`helpers = Betfair::Helpers.new`
 
 
 All Markets
@@ -353,6 +353,10 @@ helpers.split_markets_string
 ```
 
 
+Extra
+=====
+
+
 API Limits
 ----------
 [Betfair API Limits](http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64)
@@ -361,15 +365,15 @@ API Limits
 Requirements
 ------------
 
-savon
+* savon
 
 
 Requirements for testing
 ------------------------
 
-savon_spec
-rspec
-rake
+* savon_spec
+* rspec
+* rake
 
 
 To Do
