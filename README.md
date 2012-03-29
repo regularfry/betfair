@@ -9,7 +9,7 @@ or add this to your Gemfile if you use [Bundler](http://gembundler.com/):
 
       gem 'betfair'    
 
-## Introduction ## 
+## Introduction
 In a irb console
 
     require 'betfair'
@@ -86,7 +86,7 @@ the markets that are currently active or suspended on the given exchange.
     markets = 
       bf.get_all_markets(session_token, exchange_id, event_type_ids, locale, countries, from_date, to_date)
 
-##Get MU Bets##    
+##Get MU Bets    
 The API GetMUBets service allows you to retrieve information about all 
 your matched and unmatched bets on a particular exchange server.
 
@@ -333,7 +333,7 @@ foo.first returns
     { :prices_string=>nil, :runner_matched=>0, :last_back_price=>0, :wom=>0.6054936499440416, :b1=>4.2, :b1_available=>430.35, :b2=>4.1, :b2_available=>311.51, :b3=>3.85, 
       :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
     
-# Extra # 
+# Extra
 ## API Limits ##
 [Betfair API Limits](http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64)
 
