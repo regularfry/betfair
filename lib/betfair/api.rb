@@ -403,25 +403,26 @@ module Betfair
       markets = markets.split ":"
       markets.each do |piece|
         piece.gsub! "\0", '\:'
-        market_hash[piece.split('~')[0].to_i] = { 
-          :market_id            => piece.split('~')[0].to_i,
-          :market_name          => piece.split('~')[1].to_s,
-          :market_type          => piece.split('~')[2].to_s,
-          :market_status        => piece.split('~')[3].to_s,
+        foo = piece.split('~')
+        market_hash[foo[0].to_i] = { 
+          :market_id            => foo[0].to_i,
+          :market_name          => foo[1].to_s,
+          :market_type          => foo[2].to_s,
+          :market_status        => foo[3].to_s,
           # bf returns in this case time in Epoch, but in milliseconds
-          :event_date           => Time.at(piece.split('~')[4].to_i/1000),
-          :menu_path            => piece.split('~')[5].to_s,
-          :event_hierarchy      => piece.split('~')[6].to_s,
-          :bet_delay            => piece.split('~')[7].to_s,
-          :exchange_id          => piece.split('~')[8].to_i,
-          :iso3_country_code    => piece.split('~')[9].to_s,
+          :event_date           => Time.at(foo[4].to_i/1000),
+          :menu_path            => foo[5].to_s,
+          :event_hierarchy      => foo[6].to_s,
+          :bet_delay            => foo[7].to_s,
+          :exchange_id          => foo[8].to_i,
+          :iso3_country_code    => foo[9].to_s,
           # bf returns in this case time in Epoch, but in milliseconds
-          :last_refresh         => Time.at(piece.split('~')[10].to_i/1000),
-          :number_of_runners    => piece.split('~')[11].to_i,
-          :number_of_winners    => piece.split('~')[12].to_i,
-          :total_amount_matched => piece.split('~')[13].to_f,
-          :bsp_market           => piece.split('~')[14] == 'Y' ? true : false,
-          :turning_in_play      => piece.split('~')[15] == 'Y' ? true : false
+          :last_refresh         => Time.at(foo[10].to_i/1000),
+          :number_of_runners    => foo[11].to_i,
+          :number_of_winners    => foo[12].to_i,
+          :total_amount_matched => foo[13].to_f,
+          :bsp_market           => foo[14] == 'Y' ? true : false,
+          :turning_in_play      => foo[15] == 'Y' ? true : false
         } 
       end
       return market_hash
@@ -435,9 +436,15 @@ module Betfair
       if string_raw.is_a?(String)
         string_raw.split(':').each do |string|
           bar = string.split('~')
-          doh = { market_id: bar[0].to_i, market_name: bar[1], market_type: bar[2], market_status: bar[3], event_date: bar[4].to_i, menu_path: bar[5], event_heirachy: bar[6], 
-                  bet_delay: bar[7].to_i, exchange_id: bar[8].to_i, iso3_country_code: bar[9], last_refresh: bar[10].to_i, number_of_runners: bar[11].to_i, number_of_winners: bar[12].to_i, 
-                  total_amount_matched: bar[13].to_f, bsp_market: bar[14], turning_in_play: bar[15] }        
+          
+          bsp_market        = bar[14] == 'Y' ? true : false
+          turning_in_play   = bar[15] == 'Y' ? true : false
+          event_date        = Time.at(bar[4].to_i/1000)
+          last_refresh      = Time.at(bar[10].to_i/1000)
+          
+          doh = { market_id: bar[0].to_i, market_name: bar[1], market_type: bar[2], market_status: bar[3], event_date: event_date, menu_path: bar[5], event_heirachy: bar[6], 
+                  bet_delay: bar[7].to_i, exchange_id: bar[8].to_i, iso3_country_code: bar[9], last_refresh: last_refresh, number_of_runners: bar[11].to_i, number_of_winners: bar[12].to_i, 
+                  total_amount_matched: bar[13].to_f, bsp_market: bsp_market, turning_in_play: turning_in_play }        
           foo << doh if !doh[:market_name].nil?
         end
       end
@@ -453,16 +460,6 @@ module Betfair
         :market_name => details[:name],
         :market_type_name => details[:menu_path].to_s.split('\\')[1]
       }
-    end
-
-    def combine(market, prices)
-      market = details(market)            
-      prices = prices(prices)
-      market[:runners].each do |runner|
-        runner.merge!( { :market_id => market[:market_id] } )
-        runner.merge!( { :market_type_id => market[:market_type_id] } )
-        runner.merge!(price_string(prices[runner[:runner_id]]))
-      end
     end
 
     def details(market)
@@ -481,6 +478,16 @@ module Betfair
       end
       return price_hash
     end
+    
+    def combine(market, prices)
+      market = details(market)            
+      prices = prices(prices)
+      market[:runners].each do |runner|
+        runner.merge!( { :market_id => market[:market_id] } )
+        runner.merge!( { :market_type_id => market[:market_type_id] } )
+        runner.merge!(price_string(prices[runner[:runner_id]]))
+      end
+    end
 
     ##
     #
@@ -498,37 +505,40 @@ module Betfair
       # parsing first the auxiliary price info
       aux = pieces.first
       aux.gsub! "\0", '\:'
+      foo = aux.split('~')
       aux_hash =   {  
-        :market_id                      => aux.split('~')[0].to_i,
-        :currency                       => aux.split('~')[1].to_s,
-        :market_status                  => aux.split('~')[2].to_s,
-        :in_play_delay                  => aux.split('~')[3].to_i,
-        :number_of_winners              => aux.split('~')[4].to_i,
-        :market_information             => aux.split('~')[5].to_s,
-        :discount_allowed               => aux.split('~')[6] == 'true' ? true : false,
-        :market_base_rate               => aux.split('~')[7].to_s,
-        :refresh_time_in_milliseconds   => aux.split('~')[8].to_i,
-        :removed_runners                => aux.split('~')[9].to_s,
-        :bsp_market                     => aux.split('~')[10] == 'Y' ? true : false
+        :market_id                      => foo[0].to_i,
+        :currency                       => foo[1].to_s,
+        :market_status                  => foo[2].to_s,
+        :in_play_delay                  => foo[3].to_i,
+        :number_of_winners              => foo[4].to_i,
+        :market_information             => foo[5].to_s,
+        :discount_allowed               => foo[6] == 'true' ? true : false,
+        :market_base_rate               => foo[7].to_s,
+        :refresh_time_in_milliseconds   => foo[8].to_i,
+        :removed_runners                => foo[9].to_s,
+        :bsp_market                     => foo[10] == 'Y' ? true : false
       }
 
       # now iterating over the prices excluding the first piece that we already parsed above 
       pieces[1..-1].each do |piece|
         piece.gsub! "\0", '\:'
-
+        
+        bar = piece.split('~')
         # using the selection_id as hash key
-        price_hash_key = piece.split('~')[0].to_i
+        price_hash_key = bar[0].to_i
 
-        price_hash[price_hash_key] = {  :selection_id         => piece.split('~')[0].to_i,
-          :order_index          => piece.split('~')[1].to_i,
-          :total_amount_matched => piece.split('~')[2].to_f,
-          :last_price_matched   => piece.split('~')[3].to_f,
-          :handicap             => piece.split('~')[4].to_f,
-          :reduction_factor     => piece.split('~')[5].to_f,
-          :vacant               => piece.split('~')[6] == 'true' ? true : false,
-          :far_sp_price         => piece.split('~')[7].to_f,
-          :near_sp_price        => piece.split('~')[8].to_f,
-          :actual_sp_price      => piece.split('~')[9].to_f                           
+        price_hash[price_hash_key] = {  
+          :selection_id                 => bar[0].to_i,
+          :order_index                  => bar[1].to_i,
+          :total_amount_matched         => bar[2].to_f,
+          :last_price_matched           => bar[3].to_f,
+          :handicap                     => bar[4].to_f,
+          :reduction_factor             => bar[5].to_f,
+          :vacant                       => bar[6] == 'true' ? true : false,
+          :far_sp_price                 => bar[7].to_f,
+          :near_sp_price                => bar[8].to_f,
+          :actual_sp_price              => bar[9].to_f                           
         }
 
         # merge lay and back prices into price_hash
