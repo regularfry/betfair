@@ -49,7 +49,7 @@ get one of these simply call:
     location_id = 0
     ip_address = nil
 
-  session_token = bf.login(username, password, product_id, vendor_software_id, location_id, ip_address)
+    session_token = bf.login(username, password, product_id, vendor_software_id, location_id, ip_address)
 
 The `session_token` value you get back responds to #success? which will tell you whether login
 was successful or not.  If `session_token.success?` returns false,
