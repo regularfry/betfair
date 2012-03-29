@@ -325,7 +325,7 @@ foo.first returns
       :b3=>3.85, :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
     ]
 
-## Prices String ##
+### Prices String ##
 
     prices = bf.get_market_prices_compressed(session_token, 2, 100388290)
     foo = helpers.price_string(prices, true)
