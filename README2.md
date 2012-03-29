@@ -7,9 +7,11 @@ Installation
 Betfair is available through
 [Rubygems](http://rubygems.org/gems/betfair) and can be installed via:
 
-  `gem install betfair`
+`gem install betfair`
 
-OR with bundler: `gem 'betfair'` and `bundle install`
+OR with bundler: 
+
+`gem 'betfair'` and `bundle install`
 
 
 Introduction
@@ -60,19 +62,23 @@ At the heart of the Betfair API is the `session_token`. In order to
 get one of these simply call:
 
 ```shell
-session_token = bf.login('username', 'password', 82, 0, 0, nil)
+username = 'foo'
+password = 'bar'
+product_id = 82
+vendor_software_id = 0
+location_id = 0
+ip_address = nil
+
+session_token = bf.login(username, password, product_id, vendor_software_id, location_id, ip_address)
 ```
 
-Username and Password are fairly obvious.  The `session_token` value
+`username` and `password` are fairly obvious.  The `session_token` value
 you get back responds to #success? which will tell you whether login
 was successful or not.  If `session_token.success?` returns false,
 `session_token.to_s` will give you the error message.
 
 82 is the standard `product_id`, you may have a different one depending
 on the level of Betfair API access that you have.
-
-You can ignore the rest and leave as is, but they refer to `vendor_software_id`, 
-`location_id`, `ip_address` as required by the Betfair API.
 
 
 Logout
