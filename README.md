@@ -221,35 +221,34 @@ There are a bunch of helper methods to help you handle the output from the vario
 
     helpers = Betfair::Helpers.new
 
-!!!STILL NEED TO DOCUMENT THESE!!!
-
 ## All Markets ##
 When you call
 
-    markets = bf.get_all_markets(session_token, 2, [61420], nil, nil, nil, nil)
+    all_markets = bf.get_all_markets(session_token, 2, [61420], nil, nil, nil, nil)
     
 you get back a string of all the Australian Rules markets. 
 
 Pump it into this helper and you will get back a nice hash.
     
-    foo = helpers.all_markets(markets)
+    foo = helpers.all_markets(all_markets)
 
 This returns a hash with the `market_id` as the key.
 
 foo[100388290] returns
 
     { :market_id=>100388290, :market_name=>"Premiers 2012", :market_type=>"O", :market_status=>"ACTIVE", :event_date=>2012-03-24 16:20:00 +0800, 
-    :menu_path=>"\\Australian Rules\\AFL 2012", :event_hierarchy=>"/61420/26759191/100388290", :bet_delay=>"0", :exchange_id=>2, 
-    :iso3_country_code=>"AUS", :last_refresh=>2012-03-29 15:10:10 +0800, :number_of_runners=>18, :number_of_winners=>1, 
-    :total_amount_matched=>193146.36, :bsp_market=>false, :turning_in_play=>false}
+      :menu_path=>"\\Australian Rules\\AFL 2012", :event_hierarchy=>"/61420/26759191/100388290", :bet_delay=>"0", :exchange_id=>2, 
+      :iso3_country_code=>"AUS", :last_refresh=>2012-03-29 15:10:10 +0800, :number_of_runners=>18, :number_of_winners=>1, 
+      :total_amount_matched=>193146.36, :bsp_market=>false, :turning_in_play=>false 
+    }
     
 
 ## Split Markets String ##
 This function does the same as the #all_markets method. Not sure how/why it has been 
 duplicated, but it has so here is how it works.
 
-    markets = bf.get_all_markets(session_token, 2, [61420], nil, nil, nil, nil)
-    foo = helpers.split_markets_string(markets)
+    all_markets = bf.get_all_markets(session_token, 2, [61420], nil, nil, nil, nil)
+    foo = helpers.split_markets_string(all_markets)
 
 The output looks a little different to the #all_markets method.
 
@@ -258,34 +257,81 @@ foo.first returns
     { :market_id=>100388290, :market_name=>"Premiers 2012", :market_type=>"O", :market_status=>"ACTIVE", :event_date=>1332577200000, 
       :menu_path=>"\\Australian Rules\\AFL 2012", :event_heirachy=>"/61420/26759191/100388290", :bet_delay=>0, :exchange_id=>2, 
       :iso3_country_code=>"AUS", :last_refresh=>1333005010983, :number_of_runners=>18, :number_of_winners=>1, 
-      :total_amount_matched=>193146.36, :bsp_market=>"N", :turning_in_play=>"N" }
+      :total_amount_matched=>193146.36, :bsp_market=>"N", :turning_in_play=>"N" 
+    }
     
-
 ## Market Info ##
+This helper sorts out a nice hash from the 
+    market = bf.get_market(session_token, 2, 100388290)
+    foo = helpers.market_info(details)
 
-    helpers.market_info
+Which returns
 
-## Combine ##
-
-    helpers.combine
-
-## Details ##
-
-    helpers.details
+    { :exchange_id=>nil, :market_type_id=>nil, :market_matched=>nil, :menu_path=>"\\AFL 2012", :market_id=>"100388290", :market_name=>"Premiers 2012", :market_type_name=>"AFL 2012" }
 
 ## Prices ##
+This helper cleans up the prices
 
-    helpers.prices
+    prices = bf.get_market_prices_compressed(session_token, 2, 100388290)
+    foo = helpers.prices(prices)
+
+## Combine ##
+Use this to combine `runner_names` and prices from the #market_info and #prices helpers
+    
+    market = bf.get_market(session_token, 2, 100388290)
+    prices = bf.get_market_prices_compressed(session_token, 2, 100388290)    
+    foo = helpers.combine(market, prices)
+
+foo.first returns
+
+    { :runner_id=>39983, :runner_name=>"Collingwood Magpies", :market_id=>100388290, :market_type_id=>61420, 
+      :prices_string=>"39983~0~89899.79~4.2~~~false~~~~|4.2~430.35~L~1~4.1~311.51~L~2~3.85~4.75~L~3~|4.4~155.46~B~1~4.6~230.69~B~2~5.9~100.3~B~3~", 
+      :runner_matched=>89899.79, :last_back_price=>4.2, :wom=>0.6054936499440416, :b1=>4.2, :b1_available=>430.35, :b2=>4.1, :b2_available=>311.51, 
+      :b3=>3.85, :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3 
+    } 
+
+## Details ##
+Gets the `market_id`/`market_name` and the `runner_id`/`runner_name` 
+
+    market = bf.get_market(session_token, 2, 100388290)
+    foo = helpers.details(market)
+
+Which returns
+
+    { :market_id=>100388290, :market_type_id=>61420, 
+      :runners=>[{:runner_id=>39983, :runner_name=>"Collingwood Magpies"}, {:runner_id=>244664, :runner_name=>"Hawthorn Hawks"}, 
+      {:runner_id=>244663, :runner_name=>"Geelong Cats"}, {:runner_id=>244689, :runner_name=>"Carlton Blues"}, 
+      {:runner_id=>210344, :runner_name=>"West Coast Eagles"}, {:runner_id=>244666, :runner_name=>"Fremantle Dockers"}, 
+      {:runner_id=>244688, :runner_name=>"St Kilda Saints"}, {:runner_id=>244665, :runner_name=>"Sydney Swans"}, 
+      {:runner_id=>173363, :runner_name=>"Adelaide Crows"}, {:runner_id=>210343, :runner_name=>"Essendon Bombers"}, 
+      {:runner_id=>39986, :runner_name=>"Western Bulldogs"}, {:runner_id=>244667, :runner_name=>"Richmond Tigers"}, 
+      {:runner_id=>2013991, :runner_name=>"North Melbourne Kangaroos"}, {:runner_id=>39987, :runner_name=>"Melbourne Demons"}, 
+      {:runner_id=>39984, :runner_name=>"Brisbane Lions"}, {:runner_id=>217710, :runner_name=>"Port Adelaide Power"}, 
+      {:runner_id=>4997061, :runner_name=>"Gold Coast Suns"}, {:runner_id=>5149403, :runner_name=>"Greater Western Sydney Giants"}]
+    }
 
 ## Prices Complete ##
+Helper to deal with the prices string from a market.
 
-    helpers.prices_complete
+    prices = bf.get_market_prices_compressed(session_token, 2, 100388290)
+    foo = helpers.prices_complete(prices)
+
+foo.first returns 
+
+    [ 39983, {:selection_id=>39983, :order_index=>0, :total_amount_matched=>89899.79, :last_price_matched=>4.2, :handicap=>0.0, 
+      :reduction_factor=>0.0, :vacant=>false, :far_sp_price=>0.0, :near_sp_price=>0.0, :actual_sp_price=>0.0, :prices_string=>nil, 
+      :runner_matched=>0, :last_back_price=>0, :wom=>0.6054936499440416, :b1=>4.2, :b1_available=>430.35, :b2=>4.1, :b2_available=>311.51, 
+      :b3=>3.85, :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
+    ]
 
 ## Prices String ##
 
-    helpers.prices_string
+    prices = bf.get_market_prices_compressed(session_token, 2, 100388290)
+    foo = helpers.price_string(prices, true)
 
-
+    { :prices_string=>nil, :runner_matched=>0, :last_back_price=>0, :wom=>0.6054936499440416, :b1=>4.2, :b1_available=>430.35, :b2=>4.1, :b2_available=>311.51, :b3=>3.85, 
+      :b3_available=>4.75, :l1=>4.4, :l1_available=>155.46, :l2=>4.6, :l2_available=>230.69, :l3=>5.9, :l3_available=>100.3}
+    
 # Extra # 
 ## API Limits ##
 [Betfair API Limits](http://bdp.betfair.com/index.php?option=com_content&task=view&id=36&Itemid=64)
