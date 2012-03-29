@@ -1,9 +1,8 @@
 BETFAIR API
 ===========
 
-------------
 Installation
-------------
+============
 
 Betfair is available through
 [Rubygems](http://rubygems.org/gems/betfair) and can be installed via:
@@ -12,21 +11,26 @@ Betfair is available through
 
 OR with bundler: `gem 'betfair'` and `bundle install`
 
-------------
+
 Introduction
-------------
+============
 In a irb console
 
-  require 'betfair'
+```shell
+require 'betfair'
+```
 
 From a Gemfile
 
-  gem 'betfair'
-
+```shell
+gem 'betfair'
+```
 
 Load the general api class
 
-  bf = Betfair::API.new
+```shell
+bf = Betfair::API.new
+```
 
 If you want to use a proxy or turn on Savon's logging then just pass
 in like so:
@@ -34,18 +38,20 @@ in like so:
 This is a local squid proxy I tunnel to from my local 
 machine to access the host server in UK for dev purposes.
 
-  proxy = 'http://localhost:8888' 
-  logging = true
-  bf = Betfair::API.new(proxy, logging)
+```shell
+proxy = 'http://localhost:8888' 
+logging = true
+bf = Betfair::API.new(proxy, logging)
+```
 
 Proxies can be useful if you want to host on a cloud service such as
 Heroku, as you will be denied access to the Betfair API from the
 USA. Just proxy via a server from a country that Betfair allows, such
 as the UK.
 
--------------------
+
 General API METHODS
--------------------
+===================
 
 
 Login
@@ -170,9 +176,9 @@ about your local wallet on a particular exchange server.
   funds = 
     bf.get_account_funds(session_token, exchange_id)
 
--------------------------
+
 Bet Placement API METHODS
--------------------------
+=========================
 
 
 Place Bet
@@ -187,7 +193,7 @@ The API PlaceBets service allows you to place multiple (1 to 60) bets on a singl
   size            = 2.0
   
   place_bet = 
-    bf.(session_token, exchange_id, market_id, selection_id, bet_type, price, size) 
+    bf.place_bet(session_token, exchange_id, market_id, selection_id, bet_type, price, size) 
 
 
 Place Multiple Bets
@@ -255,9 +261,9 @@ The API CancelBets service allows you to cancel multiple unmatched (1 to 40) bet
     bf.cancel_multiple_bets(session_token, exchange_id, bets)
 
     
--------
+
 Helpers
--------
+=======
 
 
 helpers = Betfair::Helpers.new
