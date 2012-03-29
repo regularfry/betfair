@@ -221,6 +221,8 @@ There are a bunch of helper methods to help you handle the output from the vario
 
     helpers = Betfair::Helpers.new
 
+!!!STILL NEED TO DOCUMENT THESE!!!
+
 ## All Markets ##
 
     helpers.all_markets(markets)
