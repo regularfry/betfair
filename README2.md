@@ -59,18 +59,20 @@ Login
 At the heart of the Betfair API is the `session_token`. In order to
 get one of these simply call:
 
-    session_token = bf.login('username', 'password', 82, 0, 0, nil)
+```shell
+session_token = bf.login('username', 'password', 82, 0, 0, nil)
+```
 
 Username and Password are fairly obvious.  The `session_token` value
 you get back responds to #success? which will tell you whether login
 was successful or not.  If `session_token.success?` returns false,
 `session_token.to_s` will give you the error message.
 
-82 is the standard Product Id, you may have a different one depending
+82 is the standard `product_id`, you may have a different one depending
 on the level of Betfair API access that you have.
 
-You can ignore the rest and leave as is, but they refer to Vendor
-Software Id, Location Id, Ip Address as required by the Betfair API.
+You can ignore the rest and leave as is, but they refer to `vendor_software_id`, 
+`location_id`, `ip_address` as required by the Betfair API.
 
 
 Logout
