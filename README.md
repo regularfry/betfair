@@ -83,8 +83,8 @@ the markets that are currently active or suspended on the given exchange.
     from_date       = Time.now.utc
     to_date         = 30.minutes.from_now.utc
   
-  markets = 
-    bf.get_all_markets(session_token, exchange_id, event_type_ids, locale, countries, from_date, to_date)
+    markets = 
+      bf.get_all_markets(session_token, exchange_id, event_type_ids, locale, countries, from_date, to_date)
 
 ##Get MU Bets##    
 The API GetMUBets service allows you to retrieve information about all 
