@@ -397,7 +397,7 @@ module Betfair
     ## HELPER METHODS
     #
     
-    def #(markets)
+    def all_markets(markets)
       market_hash = {}
       markets.gsub! '\:', "\0"
       markets = markets.split ":"
@@ -410,14 +410,14 @@ module Betfair
           :market_type          => foo[2].to_s,
           :market_status        => foo[3].to_s,
           # bf returns in this case time in Epoch, but in milliseconds
-          :event_date           => Time.at(foo[4].to_i/1000).utc,
+          :event_date           => Time.at(foo[4].to_i/1000),
           :menu_path            => foo[5].to_s,
           :event_hierarchy      => foo[6].to_s,
           :bet_delay            => foo[7].to_s,
           :exchange_id          => foo[8].to_i,
           :iso3_country_code    => foo[9].to_s,
           # bf returns in this case time in Epoch, but in milliseconds
-          :last_refresh         => Time.at(foo[10].to_i/1000).utc,
+          :last_refresh         => Time.at(foo[10].to_i/1000),
           :number_of_runners    => foo[11].to_i,
           :number_of_winners    => foo[12].to_i,
           :total_amount_matched => foo[13].to_f,

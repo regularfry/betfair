@@ -251,12 +251,12 @@ duplicated, but it has so here is how it works.
 
 The output looks a little different to the #all_markets method.
 
-foo.first returns
+foo.first returns    
     
-    { :market_id=>100388290, :market_name=>"Premiers 2012", :market_type=>"O", :market_status=>"ACTIVE", :event_date=>2012-03-24 16:20:00 +0800, 
+    { :market_id=>100388290, :market_name=>"Premiers 2012", :market_type=>"O", :market_status=>"ACTIVE", :event_date=>2012-03-24 08:20:00 UTC, 
       :menu_path=>"\\Australian Rules\\AFL 2012", :event_heirachy=>"/61420/26759191/100388290", :bet_delay=>0, :exchange_id=>2, 
-      :iso3_country_code=>"AUS", :last_refresh=>2012-03-29 16:35:21 +0800, :number_of_runners=>18, :number_of_winners=>1, 
-      :total_amount_matched=>193599.58, :bsp_market=>false, :turning_in_play=>false
+      :iso3_country_code=>"AUS", :last_refresh=>2012-03-29 09:10:12 UTC, :number_of_runners=>18, :number_of_winners=>1, 
+      :total_amount_matched=>193657.0, :bsp_market=>false, :turning_in_play=>false
     }
     
 ## Market Info ##
