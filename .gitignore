@@ -3,5 +3,3 @@
 Gemfile.lock
 pkg/*
 .rvmrc
-examples/bar.rb
-examples/doh.rb

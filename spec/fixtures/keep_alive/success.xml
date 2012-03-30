@@ -1,0 +1,16 @@
+<soap:Envelope xmlns:soap="http://schemas.xmlsoap.org/soap/envelope/" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:n2="http://www.betfair.com/publicapi/types/global/v3/" xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+   <soap:Body>
+      <n:keepAliveResponse xmlns:n="http://www.betfair.com/publicapi/v3/BFGlobalService/">
+         <n:Result xsi:type="n2:KeepAliveResp">
+            <header xsi:type="n2:APIResponseHeader">
+               <errorCode xsi:type="n2:APIErrorEnum">OK</errorCode>
+               <minorErrorCode xsi:nil="1"/>
+               <sessionToken xsi:type="xsd:string">AXwtUFENz+/mWaatVtjUosug26+TYLYWiHPhRFRiabs=</sessionToken>
+               <timestamp xsi:type="xsd:dateTime">2012-03-28T00:49:04.951Z</timestamp>
+            </header>
+            <apiVersion xsi:nil="1"/>
+            <minorErrorCode xsi:nil="1"/>
+         </n:Result>
+      </n:keepAliveResponse>
+   </soap:Body>
+</soap:Envelope>

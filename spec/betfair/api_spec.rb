@@ -1,15 +1,23 @@
 require 'tempfile'
 require 'spec_helper'
 
-
 module Betfair
 
-  describe "Helper methods for mashing the data from the API" do 
+  describe "Helper methods for mashing the data from the API - " do 
 
     before(:all) do 
       @bf = Betfair::API.new
       @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
       @helpers = Betfair::Helpers.new
+    end
+    
+    describe "Create a hash from the get_all_markets API call"  do
+      it "pulls the relevant stuff out of get_all_markets and puts it in a hash" do
+        savon.expects(:get_all_markets).returns(:success)
+        markets = @bf.get_all_markets(@session_token, 2)
+        markets = @helpers.split_markets_string(markets)
+        markets.should_not be_nil        
+      end
     end
     
     describe "Create a hash for the market details"  do
@@ -55,7 +63,7 @@ module Betfair
 
   end
 
-  describe "Placing and cancelling bets" do
+  describe "Placing and cancelling bets - " do
     
     before(:all) do 
       @bf = Betfair::API.new
@@ -65,8 +73,8 @@ module Betfair
     describe "place bet success"  do
       it "should place a bet on the exchange via the api" do
         savon.expects(:place_bets).returns(:success)
-        bet = @bf.place_bet(@session_token, 1, 104184109, 58805, 'B', 10.0, 5.0)       
-        bet.should_not be_nil
+        bet = @bf.place_bet(@session_token, 1, 104184109, 58805, 'B', 2.0, 2.0)       
+        bet[:bet_id].should eq('16939643915')
       end
     end
     
@@ -78,11 +86,71 @@ module Betfair
       end
     end
     
-    describe "cancel bet success"  do
+    describe "place multiple bets success"do
+      it "should place mutliple bets on the exchange via the api" do
+        savon.expects(:place_bets).returns(:success)
+        bets = []
+        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
+        bets = @bf.place_multiple_bets(@session_token, 1, bets)       
+        bets[:bet_id].should eq('16939643915')
+      end
+    end
+    
+    describe "place multiple bets fail"  do
+      it "should return an error message" do
+        savon.expects(:place_bets).returns(:fail)
+        bets = []
+        bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }                  
+        error_code = @bf.place_multiple_bets(@session_token, 1, bets)      
+        error_code[:result_code].should eq('INVALID_SIZE')
+      end
+    end
+        
+    describe "update bet success"  do
+      it "should update a bet on the exchange via the api" do
+        savon.expects(:update_bets).returns(:success)
+        bet = @bf.update_bet(@session_token, 1, 1234, 'NONE', 1.6, 10.0, 'NONE', 1.5, 5.0)       
+        bet[:new_bet_id].should eq('19052919856')
+      end
+    end
+
+    describe "update bet fail after trying to change an already changed bet"  do
+      it "should return an error message" do
+        savon.expects(:update_bets).returns(:fail)
+        bet = @bf.update_bet(@session_token, 1, 1234, 'NONE', 1.6, 10.0, 'NONE', 1.5, 5.0)       
+        bet[:result_code].should eq('BET_TAKEN_OR_LAPSED')
+      end
+    end
+    
+    describe "update multiple bets success"do
+      it "should update mutliple bets on the exchange via the api" do
+        savon.expects(:update_bets).returns(:success)
+        bets = []
+        bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
+                  old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }
+        bets = @bf.update_multiple_bets(@session_token, 1, bets)       
+        bets[:new_bet_id].should eq('19052919856')
+      end
+    end
+    
+    describe "update multiple bets fail"  do
+      it "should return an error message" do
+        savon.expects(:update_bets).returns(:fail)
+        bets = []
+        bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
+                  old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }                 
+        bets = @bf.update_multiple_bets(@session_token, 1, bets)      
+        bets[:result_code].should eq('BET_TAKEN_OR_LAPSED')
+      end
+    end        
+      
+    describe "cancel bet success" do
       it "should cancel a bet on the exchange via the api" do
         savon.expects(:cancel_bets).returns(:success)
         bet = @bf.cancel_bet(@session_token, 3, 16939689578)       
-        bet.should_not be_nil
+        bet[:result_code].should eq('REMAINING_CANCELLED')
       end
     end
     
@@ -94,10 +162,25 @@ module Betfair
       end
     end
     
+    describe "cancel multiple bets success" do
+      it "should cancel a bet on the exchange via the api" do
+        savon.expects(:cancel_bets).returns(:success)
+        bets = @bf.cancel_multiple_bets(@session_token, 3, [16939689578, 16939689579, 169396895710])       
+        bets[:result_code].should eq('REMAINING_CANCELLED')
+      end
+    end
+    
+    describe "cancel bet fail"  do
+      it "should fail to cancel mulitple bets on the exchange via the api" do
+        savon.expects(:cancel_bets).returns(:fail)
+        error_code = @bf.cancel_multiple_bets(@session_token, 3, [16939689578, 16939689579, 169396895710])        
+        error_code.should eq('API_ERROR - NO_SESSION')
+      end
+    end
+    
   end
-
   
-  describe "Reading account details" do
+  describe "Reading account details - " do
     before(:all) do 
       @bf = Betfair::API.new
       @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
@@ -111,9 +194,8 @@ module Betfair
       end
     end
   end
-
   
-  describe "Basic read methods from the API" do 
+  describe "Basic read methods from the API - " do 
 
     before(:all) do 
       @bf = Betfair::API.new
@@ -140,7 +222,7 @@ module Betfair
       it "should return the details for a market given the exchange id and market id" do
         savon.expects(:get_market).returns(:success)
         market = @bf.get_market(@session_token, 2, 10038633)        
-        market.should_not be_nil        
+        market[:market_id].should eq('100386338')        
       end
     end
 
@@ -172,52 +254,102 @@ module Betfair
       it "should return active event types given the locale" do
         savon.expects(:get_active_event_types).returns(:success)
         events = @bf.get_active_event_types(@session_token, 'en')
+        events[0][:id].should eq('6423')
         events.should_not be_nil
       end    
     end
     
     describe "get matched/unmatched bets success" do
       it "should return all of our unmatched and matched bets on an exchange, can take a market_id as the third arguement, plus many more" do 
-        savon.expects(:get_m_u_bets).returns(:success)
+        savon.expects(:getMUBets).returns(:success)
         bets = @bf.get_mu_bets(@session_token, 1)        
-        bets.length.should eq(2)
         bets[0][:selection_id].should eq("5986909")
         bets[1][:selection_id].should eq("6230544")
       end
     end
     
-    describe "get matched/unmatched bets"  do
+    describe "get matched/unmatched bets fail"  do
       it "should return an error message given the exchange id and and array of market type ids and no session id" do
         savon.expects(:getMUBets).returns(:fail)
         error_code = @bf.get_mu_bets(@session_token, 1)        
         error_code.should eq('API_ERROR - NO_SESSION')        
       end
     end
+    
+    describe "logout success" do
+      it "should successfully log out of the API" do
+        savon.expects(:logout).returns(:success)
+        session_token = @bf.logout(@session_token)
+        session_token.should eq(nil) # Returns a blank session_token
+      end
+    end
+    
+    describe "logout fail" do
+      it "should un-successfully log out of the API" do
+        savon.expects(:logout).returns(:fail)
+        error_code = @bf.logout(@session_token)
+        error_code.should eq('API_ERROR - NO_SESSION')
+      end
+    end
+    
+    describe "keepalive success" do
+      it "should successfully keep alive the session token" do
+        savon.expects(:keep_alive).returns(:success)
+        session_token = @bf.keep_alive(@session_token)
+        session_token.should_not eq(' - OK')
+      end
+    end
+    
+    describe "keepalive fail" do
+      it "should un-successfully keep alive the session token" do
+        savon.expects(:keep_alive).returns(:fail)
+        error_code = @bf.keep_alive(@session_token)
+        error_code.should eq(' - NO_SESSION')
+      end
+    end
 
   end
-
      
-  describe "General logins, logouts methods and proxys and Savon logging etc" do 
+  describe "General logins, logouts methods and proxys and Savon logging etc - " do 
 
     before(:all) do 
       @bf = Betfair::API.new
     end
 
-    describe "login success"  do
-      it "should return a session token" do
-        savon.expects(:login).returns(:success)
-        session_token = @bf.login('username', 'password', 82, 0, 0, nil).to_s
-        session_token.should be_an_instance_of(String)        
+
+    describe "login" do
+      let( :response ) { @bf.login('username', 'password', 82, 0, 0, nil) }
+      subject { response }
+
+      before do savon.expects( api_call ).returns( api_response ) end
+      
+      let( :api_call ) { :login }
+
+      describe "success"  do
+        let( :api_response ) { :success }
+
+        it { should be_a_kind_of(String) }
+        it { should be_success }
+      end
+
+      describe "failure"  do
+        describe "with a bad product code" do
+          let( :api_response ) { :fail }
+
+          it { should match('PRODUCT_REQUIRES_FUNDED_ACCOUNT') }
+          it { should_not be_success }
+        end
+
+        describe "with a bad password" do
+          let( :api_response ) { :bad_password }
+          
+          it { should match("INVALID_USERNAME_OR_PASSWORD") }
+          it { should_not be_success }
+        end
+
       end
     end
 
-    describe "login fail"  do
-      it "should return an error" do
-        savon.expects(:login).returns(:fail)
-        error_code = @bf.login('username', 'password', 82, 0, 0, nil) 
-        error_code.should eq('PRODUCT_REQUIRES_FUNDED_ACCOUNT')        
-      end
-    end
 
     describe "proxy success"  do
       it "should return a session token" do
@@ -233,7 +365,7 @@ module Betfair
         savon.expects(:login).returns(:fail)
         proxy = 'http://localhost:8888'
         error_code = Betfair::API.new(proxy).login('username', 'password', 82, 0, 0, nil)
-        error_code.should eq('PRODUCT_REQUIRES_FUNDED_ACCOUNT')         
+        error_code.should match('PRODUCT_REQUIRES_FUNDED_ACCOUNT')         
       end
     end
 
