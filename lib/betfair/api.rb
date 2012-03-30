@@ -255,10 +255,12 @@ module Betfair
                          :keep_alive, 
                          :keep_alive_response )
       
-      # Need to do the old school way of checking as the keep_alive response doesn't return a minorErrorCode, so fails
+      # Need to do the old school way of checking as the keep_alive
+      # response doesn't return a minorErrorCode, so fails
       error_code = response[:header][:error_code]     
-      return error_code == 'OK' ? response[:header][:session_token] : error_code
-      #return response.maybe_result( :header, :session_token )
+      return error_code == 'OK' ? 
+        response[:header][:session_token].extend( Success ) : 
+        error_code.extend( Failure )
     end
     
     def logout(session_token)
