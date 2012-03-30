@@ -26,9 +26,9 @@ class SimpleBot
   MARKET_NAMES_INGORE = ['To Be Placed']        # Array of markets to ignore
   MARKET_TYPE         = 'O'                     # Not sure what this is
   MARKET_STATUS       = 'ACTIVE'                # Active market types
-  NUMBER_OF_WINNERS   = '1'                     # Only one winner per market
-  BSP_MARKET          = 'Y'                     # Starting price market ?
-  IN_PLAY             = '0'                     # 0 means not in play, anything above this means in play
+  NUMBER_OF_WINNERS   = 1                       # Only one winner per market
+  BSP_MARKET          = true                     # Starting price market ?
+  IN_PLAY             = 0                     # 0 means not in play, anything above this means in play
   
   ODDS                = 2.0                     # Bet on odds below this
   BET_SIDE            = 'L'                     # What type of bet, B for back and L for Lay
@@ -51,7 +51,10 @@ class SimpleBot
       if token.success? # Successful login
         LOGGER.info "Logged in successfully with #{USERNAME}, token returned - #{token}. Fetching Horses from #{COUNTRIES} and looking to lay odds on runners"
         
-        loop do                  
+        loop do   
+          token = BF.keep_alive(token)
+          LOGGER.info("Keep alive - #{token}")
+                         
           LOGGER.info 'Fetching markets'
           markets = BF.get_all_markets(token, EXCHANGE_ID, SPORTS_IDS, LOCALE, COUNTRIES, FROM_DATE, TO_DATE)     
           
@@ -96,7 +99,7 @@ class SimpleBot
     markets_hash = []
     HELPERS.split_markets_string(markets).each do |m| 
       m[:time_to_start] = m[:event_date] - FROM_DATE.to_f # Sort the hash by the time - NEED TO DO THIS
-      markets_hash << m if !m[:market_id].nil? and !MARKET_NAMES_INGORE.include?(m[:market_name]) and MARKET_TYPE == m[:market_type] and MARKET_STATUS == m[:market_status] and NUMBER_OF_WINNERS.to_i == m[:number_of_winners] and IN_PLAY.to_i == m[:bet_delay] #and BSP_MARKET == m[:bsp_market]                  
+      markets_hash << m if !m[:market_id].nil? and !MARKET_NAMES_INGORE.include?(m[:market_name]) and MARKET_TYPE == m[:market_type] and MARKET_STATUS == m[:market_status] and NUMBER_OF_WINNERS == m[:number_of_winners] and IN_PLAY == m[:bet_delay] #and BSP_MARKET == m[:bsp_market]                  
     end
     
     if markets_hash.count > 0
@@ -111,7 +114,7 @@ class SimpleBot
     LOGGER.info "#{market_id} - Checking prices for market_id"
     prices = HELPERS.prices_complete( BF.get_market_prices_compressed(token, exchange_id, market_id) )            
     # Need to recheck whether the market is ACTIVE and not IN_PLAY, this time from what gets returned from prices compressed
-    if MARKET_STATUS == prices[:market_status].to_s and IN_PLAY == prices[:in_play_delay].to_s
+    if MARKET_STATUS == prices[:market_status].to_s and IN_PLAY == prices[:in_play_delay]
       bets_placed = bets_already_placed(token, exchange_id, market_id)  
       LOGGER.info "#{market_id} - #{bets_placed.count} bets already placed for market_id"  
       

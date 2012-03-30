@@ -30,7 +30,7 @@ markets.each do |market|
     prices = bf.get_market_prices_compressed(session_token, 1, market_id)
     
     # Pump the data into the helpers
-    
+    bf.get_market(session_token, 1, market_id)
     puts helpers.market_info(details)
     puts ""
     puts helpers.combine(details, prices)

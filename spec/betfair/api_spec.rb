@@ -92,6 +92,8 @@ module Betfair
         bets = []
         bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
                   bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
+        bets <<  { market_id: 104184109, runner_id: 12234, bet_type: 'L', price: 1.5, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }
         bets = @bf.place_multiple_bets(@session_token, 1, bets)       
         bets[:bet_id].should eq('16939643915')
       end
@@ -102,7 +104,9 @@ module Betfair
         savon.expects(:place_bets).returns(:fail)
         bets = []
         bets <<  { market_id: 104184109, runner_id: 58805, bet_type: 'B', price: 2.0, size: 2.0, asian_line_id: 0, 
-                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }                  
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }  
+        bets <<  { market_id: 104184109, runner_id: 12234, bet_type: 'L', price: 1.5, size: 2.0, asian_line_id: 0, 
+                  bet_category_type: 'E', bet_peristence_type: 'NONE', bsp_liability: 0 }                
         error_code = @bf.place_multiple_bets(@session_token, 1, bets)      
         error_code[:result_code].should eq('INVALID_SIZE')
       end
@@ -130,6 +134,8 @@ module Betfair
         bets = []
         bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
                   old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }
+        bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
+                    old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }
         bets = @bf.update_multiple_bets(@session_token, 1, bets)       
         bets[:new_bet_id].should eq('19052919856')
       end
@@ -140,6 +146,8 @@ module Betfair
         savon.expects(:update_bets).returns(:fail)
         bets = []
         bets << { bet_id: 1234, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
+                  old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }
+        bets << { bet_id: 1235, new_bet_persistence_type: 'NONE', new_price: 10.0, new_size: 10.0, 
                   old_bet_persistence_type: 'NONE', old_price: 5.0, old_size: 5.0 }                 
         bets = @bf.update_multiple_bets(@session_token, 1, bets)      
         bets[:result_code].should eq('BET_TAKEN_OR_LAPSED')
@@ -296,7 +304,7 @@ module Betfair
       it "should successfully keep alive the session token" do
         savon.expects(:keep_alive).returns(:success)
         session_token = @bf.keep_alive(@session_token)
-        session_token.should_not eq(' - OK')
+        session_token.should eq('AXwtUFENz+/mWaatVtjUosug26+TYLYWiHPhRFRiabs=')
       end
     end
     
@@ -304,7 +312,7 @@ module Betfair
       it "should un-successfully keep alive the session token" do
         savon.expects(:keep_alive).returns(:fail)
         error_code = @bf.keep_alive(@session_token)
-        error_code.should eq(' - NO_SESSION')
+        error_code.should eq('NO_SESSION')
       end
     end
 
