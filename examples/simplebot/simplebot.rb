@@ -51,7 +51,10 @@ class SimpleBot
       if token.success? # Successful login
         LOGGER.info "Logged in successfully with #{USERNAME}, token returned - #{token}. Fetching Horses from #{COUNTRIES} and looking to lay odds on runners"
         
-        loop do                  
+        loop do   
+          token = BF.keep_alive(token)
+          LOGGER.info("Keep alive - #{token}")
+                         
           LOGGER.info 'Fetching markets'
           markets = BF.get_all_markets(token, EXCHANGE_ID, SPORTS_IDS, LOCALE, COUNTRIES, FROM_DATE, TO_DATE)     
           
