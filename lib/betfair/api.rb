@@ -254,7 +254,10 @@ module Betfair
         session_request( session_token,
                          :keep_alive, 
                          :keep_alive_response )
-      return response.maybe_result( :header, :session_token )
+      
+      error_code = response[:header][:error_code]     
+      return error_code == 'OK' ? response[:header][:session_token] : error_code
+      #return response.maybe_result( :header, :session_token )
     end
     
     def logout(session_token)

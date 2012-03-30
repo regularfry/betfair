@@ -304,7 +304,7 @@ module Betfair
       it "should successfully keep alive the session token" do
         savon.expects(:keep_alive).returns(:success)
         session_token = @bf.keep_alive(@session_token)
-        session_token.should_not eq(' - OK')
+        session_token.should eq('AXwtUFENz+/mWaatVtjUosug26+TYLYWiHPhRFRiabs=')
       end
     end
     
@@ -312,7 +312,7 @@ module Betfair
       it "should un-successfully keep alive the session token" do
         savon.expects(:keep_alive).returns(:fail)
         error_code = @bf.keep_alive(@session_token)
-        error_code.should eq(' - NO_SESSION')
+        error_code.should eq('NO_SESSION')
       end
     end
 
