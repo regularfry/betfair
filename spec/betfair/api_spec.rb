@@ -3,11 +3,13 @@ require 'spec_helper'
 
 module Betfair
 
+
   describe "Helper methods for mashing the data from the API - " do 
 
+    include LoginHelper
+    
     before(:all) do 
-      @bf = Betfair::API.new
-      @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
+      login()
       @helpers = Betfair::Helpers.new
     end
     
@@ -63,11 +65,13 @@ module Betfair
 
   end
 
+
   describe "Placing and cancelling bets - " do
     
+    include LoginHelper
+
     before(:all) do 
-      @bf = Betfair::API.new
-      @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
+      login()
     end
     
     describe "place bet success"  do
@@ -189,9 +193,11 @@ module Betfair
   end
   
   describe "Reading account details - " do
+
+    include LoginHelper
+
     before(:all) do 
-      @bf = Betfair::API.new
-      @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
+      login()
     end    
 
     describe "reading wallet contents" do
@@ -205,9 +211,10 @@ module Betfair
   
   describe "Basic read methods from the API - " do 
 
+    include LoginHelper
+
     before(:all) do 
-      @bf = Betfair::API.new
-      @session_token = @bf.login('username', 'password', 82, 0, 0, nil) 
+      login()
     end    
 
     describe "get all markets success"  do
